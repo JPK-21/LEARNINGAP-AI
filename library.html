@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Library — Learning-Gap AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/store.js?v=20261115_report_v5"></script>
+</head>
+<body>
+
+  <div class="app-layout">
+    
+    <!-- DESKTOP SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">LG</div>
+        <div>
+          <div style="font-weight: 800; font-size: 0.9375rem; color: #FFFFFF;">
+            Learning-Gap <span style="color: var(--aarohan-cyan);">AI</span>
+          </div>
+          <div style="font-size: 0.625rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: var(--aarohan-text-secondary); letter-spacing: 0.05em;">
+            Analyse • Learn • Improve
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="exam-overview.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Exam Analysis</span>
+        </a>
+        <a href="gaps.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <span>Learning Gaps</span>
+        </a>
+        <a href="library.html" class="nav-link active">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>My Library</span>
+        </a>
+        <a href="tutor.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14h-2v-2h2zm0-4h-2V7h2z"/></svg>
+          <span>AI Tutor</span>
+        </a>
+        <a href="question-analysis.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span>Practice</span>
+        </a>
+        <a href="progress.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>My Progress</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div style="padding: 0.5rem 0.75rem; border-radius: 0.5rem; background: #070E1C; border: 1px solid var(--aarohan-border); margin-bottom: 0.5rem;">
+          <div id="sidebarUserName" style="font-size: 0.75rem; font-weight: 700; color: #FFFFFF;">Student</div>
+          <div id="sidebarUserRoll" style="font-size: 0.6875rem; color: var(--aarohan-cyan); font-family: 'JetBrains Mono', monospace;">21EC103 • ECE Sem 5</div>
+        </div>
+        <button onclick="handleLogout()" class="btn-danger" style="width: 100%; justify-content: center;">
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- Top Bar -->
+      <header style="border-bottom: 1px solid var(--aarohan-border); background: rgba(6, 12, 27, 0.85); backdrop-filter: blur(16px); padding: 1.125rem 2.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800;">My Library</h2>
+          <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.15rem;">
+            Upload and organise your study materials for personalised, source-grounded learning.
+          </p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <a href="samples/DS_Textbook_Reference.html" target="_blank" class="btn-secondary" style="padding: 0.5rem 0.85rem; font-size: 0.75rem;">
+            📖 Preview Reference Textbook
+          </a>
+          <button onclick="indexSampleTextbook()" class="btn-secondary" style="padding: 0.5rem 0.85rem; font-size: 0.75rem;">
+            ⚡ Index DS_Textbook.pdf
+          </button>
+          <button onclick="openUploadModal()" class="btn-primary" style="padding: 0.5rem 1rem;">
+            <span>+ Upload Resource</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- MAIN PAGE CONTENT -->
+      <main class="main-container">
+        
+        <!-- SEARCH & FILTER TABS -->
+        <div class="glass-panel" style="padding: 1rem 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+          
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="filterTabs">
+            <button onclick="filterResources('all')" class="btn-primary" id="tabAll" style="font-size: 0.75rem; padding: 0.35rem 0.85rem;">All Resources</button>
+            <button onclick="filterResources('Textbook')" class="btn-secondary" id="tabTextbook" style="font-size: 0.75rem; padding: 0.35rem 0.85rem;">Textbooks</button>
+            <button onclick="filterResources('Syllabus')" class="btn-secondary" id="tabSyllabus" style="font-size: 0.75rem; padding: 0.35rem 0.85rem;">Syllabus</button>
+            <button onclick="filterResources('Lecture Note')" class="btn-secondary" id="tabLecture Note" style="font-size: 0.75rem; padding: 0.35rem 0.85rem;">Lecture Notes</button>
+            <button onclick="filterResources('Question Paper')" class="btn-secondary" id="tabQuestion Paper" style="font-size: 0.75rem; padding: 0.35rem 0.85rem;">Question Papers</button>
+          </div>
+
+          <div style="width: 18rem;">
+            <input type="text" id="searchInput" oninput="searchResources()" placeholder="Search study materials..." class="aarohan-input" style="font-size: 0.8125rem; padding: 0.45rem 0.85rem;">
+          </div>
+
+        </div>
+
+        <!-- RESOURCE TABLE (Screen 9 matching) -->
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <div style="overflow-x: auto;">
+            <table class="aarohan-table">
+              <thead>
+                <tr>
+                  <th>Resource Name</th>
+                  <th>Type</th>
+                  <th>Subject / Unit</th>
+                  <th>Size</th>
+                  <th>Added On</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="resourceTableBody">
+                <!-- Dynamically populated from store -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- UPLOAD RESOURCE MODAL -->
+      <div class="modal-overlay" id="uploadModal">
+        <div class="modal-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+            <h3 style="font-size: 1.125rem; font-weight: 700;">Upload Academic Resource</h3>
+            <button onclick="closeUploadModal()" style="background: none; border: none; color: var(--aarohan-text-secondary); font-size: 1.25rem; cursor: pointer;">&times;</button>
+          </div>
+
+          <form onsubmit="handleResourceSubmit(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div>
+              <label style="display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--aarohan-text-secondary);">
+                Document File (PDF / EPUB) *
+              </label>
+              <input type="file" id="resFileInput" accept=".pdf,.epub,.docx" required class="aarohan-input" style="padding: 0.5rem; background: #070E1C;">
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--aarohan-text-secondary);">
+                Resource Title *
+              </label>
+              <input type="text" id="resNameInput" placeholder="e.g. DS_Unit2_Notes.pdf" required class="aarohan-input">
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--aarohan-text-secondary);">
+                Category / Type *
+              </label>
+              <select id="resTypeInput" class="aarohan-input" style="background: #070E1C;">
+                <option value="Textbook">Textbook</option>
+                <option value="Lecture Note">Lecture Note</option>
+                <option value="Syllabus">Syllabus</option>
+                <option value="Question Paper">Question Paper</option>
+                <option value="Answer Sheet">Answer Sheet</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--aarohan-text-secondary);">
+                Subject &amp; Unit / Topic
+              </label>
+              <input type="text" id="resSubjectInput" placeholder="e.g. Unit 2 - Trees (EC8393)" class="aarohan-input" value="Data Structures & Algorithms">
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem;">
+              <button type="button" onclick="closeUploadModal()" class="btn-secondary">Cancel</button>
+              <button type="submit" class="btn-primary">Upload &amp; Index</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- RESOURCE INSPECT MODAL -->
+      <div class="modal-overlay" id="inspectModal">
+        <div class="modal-card" style="max-width: 32rem; border-color: rgba(56, 189, 248, 0.4);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="chip chip-blue" id="inspectResType">Textbook</span>
+                <h3 style="font-size: 1.125rem; font-weight: 800; color: #FFFFFF;" id="inspectResName">Resource Inspection</h3>
+              </div>
+              <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.25rem;" id="inspectResSubject">
+                Data Structures &amp; Algorithms (EC8393)
+              </p>
+            </div>
+            <button type="button" onclick="closeInspectModal()" style="background: none; border: none; color: var(--aarohan-text-secondary); font-size: 1.25rem; cursor: pointer;">&times;</button>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div style="padding: 1rem; background: #070E1C; border-radius: 0.625rem; border: 1px solid var(--aarohan-border); font-size: 0.8125rem;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                <div><span style="color: var(--aarohan-text-muted);">Indexing Status:</span> <strong style="color: #4ADE80;">✔ RAG Vector Indexed</strong></div>
+                <div><span style="color: var(--aarohan-text-muted);">File Size:</span> <strong style="color: #FFFFFF;" id="inspectResSize">14.8 MB</strong></div>
+                <div><span style="color: var(--aarohan-text-muted);">Indexed Date:</span> <span id="inspectResDate" style="color: #FFFFFF;">2025-01-12</span></div>
+                <div><span style="color: var(--aarohan-text-muted);">Curriculum:</span> <span style="color: var(--aarohan-cyan);">Regulation 2021</span></div>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--aarohan-cyan); margin-bottom: 0.5rem;">
+                Syllabus Concepts Covered in AI Retrieval
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;" id="inspectResTags">
+                <span class="chip chip-cyan">Tree Traversals</span>
+                <span class="chip chip-cyan">Graph Representations</span>
+                <span class="chip chip-cyan">Hashing &amp; Collision Probes</span>
+                <span class="chip chip-cyan">Stack &amp; Queue ADT</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.25rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;">
+            <button type="button" onclick="closeInspectModal()" class="btn-secondary">Close</button>
+            <a href="tutor.html?concept=Data%20Structures%20Textbook%20Review" id="inspectTutorBtn" class="btn-primary" style="padding: 0.45rem 1rem; font-size: 0.75rem;">
+              <span>Ask AI Tutor with this Reference &rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    let currentFilter = 'all';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = window.appStore.getCurrentUser();
+      if (!user) {
+        window.location.href = 'index.html';
+        return;
+      }
+      document.getElementById('sidebarUserName').innerText = user.name;
+      document.getElementById('sidebarUserRoll').innerText = (user.rollNo || '21EC103') + ' • ' + (user.department || 'ECE') + ' Sem 5';
+
+      renderResources();
+    });
+
+    function renderResources(query = '') {
+      let list = window.appStore.getResources();
+      if (currentFilter !== 'all') {
+        list = list.filter(r => r.type.toLowerCase().includes(currentFilter.toLowerCase()));
+      }
+      if (query.trim()) {
+        const q = query.toLowerCase();
+        list = list.filter(r => r.name.toLowerCase().includes(q) || r.subject.toLowerCase().includes(q));
+      }
+
+      const tbody = document.getElementById('resourceTableBody');
+      tbody.innerHTML = '';
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--aarohan-text-secondary); padding: 2rem;">No academic resources found matching criteria.</td></tr>`;
+        return;
+      }
+
+      list.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <div style="display: flex; align-items: center; gap: 0.625rem;">
+              <span style="font-size: 1.25rem;">📄</span>
+              <div>
+                <strong style="color: #FFFFFF; font-size: 0.8125rem;">${r.name}</strong>
+                <div style="font-size: 0.6875rem; color: var(--aarohan-text-secondary);">${r.uploadedBy || 'Institutional Archive'}</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="chip chip-blue">${r.type}</span></td>
+          <td style="color: #E2E8F0;">${r.subject} ${r.unit ? `<span style="color: var(--aarohan-cyan);">(${r.unit})</span>` : ''}</td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--aarohan-text-secondary);">${r.size || '3.2 MB'}</td>
+          <td style="font-size: 0.75rem; color: var(--aarohan-text-muted);">${r.addedOn}</td>
+          <td>
+            <span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC; border-color: rgba(34, 197, 94, 0.3);">
+              ✔ ${r.status || 'Indexed'}
+            </span>
+          </td>
+          <td style="text-align: right;">
+            <button onclick="viewResource('${r.name}')" class="btn-secondary" style="padding: 0.3rem 0.65rem; font-size: 0.75rem; margin-right: 0.35rem;">
+              Inspect
+            </button>
+            <button onclick="deleteResource('${r.id}')" class="btn-danger" style="padding: 0.3rem 0.5rem; font-size: 0.75rem;">
+              ✕
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterResources(type) {
+      currentFilter = type;
+      ['tabAll', 'tabTextbook', 'tabSyllabus', 'tabLecture Note', 'tabQuestion Paper'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.className = 'btn-secondary';
+      });
+
+      const activeBtn = document.getElementById(type === 'all' ? 'tabAll' : 'tab' + type);
+      if (activeBtn) activeBtn.className = 'btn-primary';
+
+      renderResources(document.getElementById('searchInput').value);
+    }
+
+    function searchResources() {
+      const q = document.getElementById('searchInput').value;
+      renderResources(q);
+    }
+
+    function viewResource(name) {
+      const resList = window.appStore.getResources();
+      const item = resList.find(r => r.name === name) || {
+        name,
+        type: 'Academic Material',
+        subject: 'Data Structures & Algorithms (EC8393)',
+        size: '14.8 MB',
+        addedOn: '2025-01-12'
+      };
+
+      document.getElementById('inspectResName').innerText = item.name;
+      document.getElementById('inspectResType').innerText = item.type;
+      document.getElementById('inspectResSubject').innerText = item.subject + (item.unit ? ` • ${item.unit}` : '');
+      document.getElementById('inspectResSize').innerText = item.size || '12.4 MB';
+      document.getElementById('inspectResDate').innerText = item.addedOn || '2025-01-12';
+      document.getElementById('inspectTutorBtn').href = `tutor.html?concept=${encodeURIComponent(item.name.replace(/\.[^/.]+$/, ''))}`;
+
+      document.getElementById('inspectModal').classList.add('active');
+    }
+
+    function closeInspectModal() {
+      document.getElementById('inspectModal').classList.remove('active');
+    }
+
+    function deleteResource(id) {
+      if (confirm('Are you sure you want to remove this academic reference?')) {
+        window.appStore.deleteResource(id);
+        renderResources();
+      }
+    }
+
+    function openUploadModal() {
+      document.getElementById('uploadModal').classList.add('active');
+    }
+
+    function closeUploadModal() {
+      document.getElementById('uploadModal').classList.remove('active');
+    }
+
+    function handleResourceSubmit(e) {
+      e.preventDefault();
+      const file = document.getElementById('resFileInput').files[0];
+      const name = document.getElementById('resNameInput').value.trim() || (file ? file.name : 'New_Resource.pdf');
+      const type = document.getElementById('resTypeInput').value;
+      const subject = document.getElementById('resSubjectInput').value.trim() || 'Data Structures (EC8393)';
+
+      const newRes = {
+        id: 'res-' + Date.now(),
+        name,
+        type,
+        subject,
+        unit: 'Uploaded Study Unit',
+        size: file ? (file.size / (1024 * 1024)).toFixed(1) + ' MB' : '3.8 MB',
+        status: 'Indexed',
+        addedOn: new Date().toISOString().split('T')[0],
+        uploadedBy: window.appStore.getCurrentUser().name,
+      };
+
+      window.appStore.addResource(newRes);
+      closeUploadModal();
+      renderResources();
+      alert(`Resource "${name}" successfully indexed into AI Tutor context.`);
+    }
+
+    function indexSampleTextbook() {
+      const exists = window.appStore.getResources().some(r => r.name === 'DS_Textbook.pdf');
+      if (exists) {
+        alert('DS_Textbook.pdf is already indexed in your Academic Library.');
+        return;
+      }
+      window.appStore.addResource({
+        id: 'res-' + Date.now(),
+        name: 'DS_Textbook.pdf',
+        type: 'Textbook',
+        subject: 'Data Structures & Algorithms (EC8393)',
+        unit: 'Units 1 to 5 (Regulation 2021)',
+        size: '14.8 MB',
+        status: 'Indexed',
+        addedOn: new Date().toISOString().split('T')[0],
+        uploadedBy: window.appStore.getCurrentUser().name,
+      });
+      renderResources();
+      alert('DS_Textbook.pdf (Data Structures & Algorithms EC8393) indexed successfully into AI Tutor context!');
+    }
+
+    function handleLogout() {
+      window.appStore.logout();
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
+

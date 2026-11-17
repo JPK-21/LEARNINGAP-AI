@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Gaps & Prerequisites — Learning-Gap AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/store.js?v=20261115_report_v5"></script>
+</head>
+<body>
+
+  <div class="app-layout">
+    
+    <!-- DESKTOP SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">LG</div>
+        <div>
+          <div style="font-weight: 800; font-size: 0.9375rem; color: #FFFFFF;">
+            Learning-Gap <span style="color: var(--aarohan-cyan);">AI</span>
+          </div>
+          <div style="font-size: 0.625rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: var(--aarohan-text-secondary); letter-spacing: 0.05em;">
+            Analyse • Learn • Improve
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="exam-overview.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Exam Analysis</span>
+        </a>
+        <a href="gaps.html" class="nav-link active">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <span>Learning Gaps</span>
+        </a>
+        <a href="library.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>My Library</span>
+        </a>
+        <a href="tutor.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14h-2v-2h2zm0-4h-2V7h2z"/></svg>
+          <span>AI Tutor</span>
+        </a>
+        <a href="question-analysis.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span>Practice</span>
+        </a>
+        <a href="progress.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>My Progress</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div style="padding: 0.5rem 0.75rem; border-radius: 0.5rem; background: #070E1C; border: 1px solid var(--aarohan-border); margin-bottom: 0.5rem;">
+          <div id="sidebarUserName" style="font-size: 0.75rem; font-weight: 700; color: #FFFFFF;">Student</div>
+          <div id="sidebarUserRoll" style="font-size: 0.6875rem; color: var(--aarohan-cyan); font-family: 'JetBrains Mono', monospace;">21EC103 • ECE Sem 5</div>
+        </div>
+        <button onclick="handleLogout()" class="btn-danger" style="width: 100%; justify-content: center;">
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- Top Bar -->
+      <header style="border-bottom: 1px solid var(--aarohan-border); background: rgba(6, 12, 27, 0.85); backdrop-filter: blur(16px); padding: 1.125rem 2.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800;">My Learning Gaps</h2>
+          <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.15rem;">
+            Concepts you need to focus on, based on your exam and practice performance.
+          </p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <a href="tutor.html" class="btn-primary" style="padding: 0.5rem 1rem;">
+            <span>Launch AI Tutor &rarr;</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- MAIN PAGE CONTENT -->
+      <main class="main-container">
+        
+        <!-- Segmented Tab Switcher -->
+        <div style="display: flex; gap: 0.5rem; border-bottom: 1px solid var(--aarohan-border); padding-bottom: 0.5rem;">
+          <button onclick="switchView('weakConcepts')" id="tabWeak" class="btn-primary" style="padding: 0.4rem 1rem; font-size: 0.8125rem;">
+            Weak Concepts (4)
+          </button>
+          <button onclick="switchView('prereqMap')" id="tabMap" class="btn-secondary" style="padding: 0.4rem 1rem; font-size: 0.8125rem;">
+            Prerequisite DAG Map
+          </button>
+          <button onclick="switchView('learningPlan')" id="tabPlan" class="btn-secondary" style="padding: 0.4rem 1rem; font-size: 0.8125rem;">
+            3-Day Remediation Plan
+          </button>
+        </div>
+
+        <!-- VIEW 1: WEAK CONCEPTS & PREREQUISITE CONCEPT MAP (Screen 7 Layout) -->
+        <div id="viewWeakConcepts" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; align-items: start;">
+          
+          <!-- Left Column: Weak Concept Cards -->
+          <div id="gapsQueueCol" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--aarohan-text-secondary);">
+              Prioritized Gap Queue
+            </div>
+
+            <div id="gapsQueueList" style="display: flex; flex-direction: column; gap: 1rem;">
+              <!-- Dynamically populated from store -->
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Prerequisite DAG Map (Matching ref_student_screens.jpg) -->
+          <div id="dagMapCol" class="glass-panel" style="padding: 1.5rem; display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <h3 style="font-size: 1rem;">Prerequisite Concept Map</h3>
+              <span class="chip chip-blue">Tree Traversal DAG</span>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-bottom: 1.5rem;">
+              Dependency analysis explains why marks were deducted: prerequisite gaps in recursion call trees prevent full traversal mastery.
+            </p>
+
+            <!-- SVG DAG Diagram -->
+            <div style="background: #040814; border: 1px solid var(--aarohan-border); border-radius: 0.875rem; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; position: relative;">
+              
+              <!-- Target Node (Tree Traversal) -->
+              <div id="dagTargetNode" class="dag-node target" style="width: 14rem; margin-bottom: 2.5rem; box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);">
+                <div id="dagTargetStatus" style="font-size: 0.625rem; text-transform: uppercase; color: var(--aarohan-amber); letter-spacing: 0.05em;">Current Gap (45%)</div>
+                <div style="font-size: 0.9375rem; font-weight: 800; color: #FFFFFF; margin-top: 0.15rem;">Tree Traversal</div>
+                <div id="dagTargetDesc" style="font-size: 0.6875rem; color: #FCD34D;">Inorder • Preorder • Postorder</div>
+              </div>
+
+              <!-- Connecting Curves SVG -->
+              <svg style="position: absolute; top: 4.5rem; width: 100%; height: 5rem; pointer-events: none;" viewBox="0 0 400 80">
+                <!-- Line to Binary Trees (left) -->
+                <path d="M 200 0 C 200 40, 100 40, 100 80" stroke="#38BDF8" stroke-width="2" fill="none" stroke-dasharray="4 4" />
+                <!-- Line to Recursion (right) -->
+                <path d="M 200 0 C 200 40, 300 40, 300 80" stroke="#38BDF8" stroke-width="2" fill="none" stroke-dasharray="4 4" />
+              </svg>
+
+              <!-- Tier 2 Prerequisite Nodes -->
+              <div style="width: 100%; display: flex; justify-content: space-around; margin-bottom: 2.5rem;">
+                
+                <div class="dag-node mastered" style="width: 10rem;">
+                  <div style="font-size: 0.625rem; text-transform: uppercase; color: #86EFAC;">Prerequisite 1</div>
+                  <div style="font-size: 0.875rem; font-weight: 700; color: #FFFFFF; margin-top: 0.15rem;">Binary Trees</div>
+                  <div style="font-size: 0.6875rem; color: #86EFAC;">Node structure (70%)</div>
+                </div>
+
+                <div class="dag-node" style="width: 10rem; border-color: var(--aarohan-cyan);">
+                  <div style="font-size: 0.625rem; text-transform: uppercase; color: var(--aarohan-cyan);">Prerequisite 2</div>
+                  <div style="font-size: 0.875rem; font-weight: 700; color: #FFFFFF; margin-top: 0.15rem;">Recursion</div>
+                  <div style="font-size: 0.6875rem; color: var(--aarohan-cyan);">Call Stack Frames (65%)</div>
+                </div>
+
+              </div>
+
+              <!-- Tier 3 Foundational Node -->
+              <svg style="position: absolute; top: 11.5rem; width: 100%; height: 5rem; pointer-events: none;" viewBox="0 0 400 80">
+                <path d="M 100 0 C 100 40, 200 40, 200 80" stroke="#1D4ED8" stroke-width="2" fill="none" />
+                <path d="M 300 0 C 300 40, 200 40, 200 80" stroke="#1D4ED8" stroke-width="2" fill="none" />
+              </svg>
+
+              <div class="dag-node mastered" style="width: 12rem; margin-top: 1rem;">
+                <div style="font-size: 0.625rem; text-transform: uppercase; color: #86EFAC;">Foundational Knowledge</div>
+                <div style="font-size: 0.875rem; font-weight: 700; color: #FFFFFF; margin-top: 0.15rem;">Trees (General)</div>
+                <div style="font-size: 0.6875rem; color: #86EFAC;">Degree, Height, Leaves (85%)</div>
+              </div>
+
+            </div>
+
+            <div style="margin-top: 1.25rem; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.75rem; color: var(--aarohan-text-secondary);">
+                Recommended Path: Review Recursion Call Stack &rarr; Trace Inorder with AI Tutor
+              </span>
+              <a href="tutor.html?concept=Recursion%20and%20Tree%20Traversal" class="btn-primary" style="padding: 0.4rem 1rem; font-size: 0.75rem;">
+                Remediate Path &rarr;
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- VIEW 2: 3-DAY REMEDIATION PLAN (Tab) -->
+        <div id="viewLearningPlan" class="glass-panel" style="display: none; padding: 1.5rem;">
+          <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">3-Day Targeted Remediation Plan</h3>
+          <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-bottom: 1.5rem;">
+            Generated specifically to overcome the mark deduction on CT-1 Question 4.
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem;">
+            
+            <div style="padding: 1.25rem; background: #070E1C; border-radius: 0.75rem; border: 1px solid var(--aarohan-border);">
+              <div class="step-badge" style="margin-bottom: 0.75rem;">1</div>
+              <h4 style="font-size: 0.875rem; font-weight: 700; color: #FFFFFF;">Day 1: Recursion &amp; Binary Tree Base</h4>
+              <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.35rem;">
+                Re-anchor the recursive activation record and call stack frames for left and right pointer visits.
+              </p>
+              <div style="font-size: 0.6875rem; color: var(--aarohan-cyan); margin-top: 0.75rem;">
+                Resource: DS_Textbook.pdf (pp. 95–102)
+              </div>
+            </div>
+
+            <div style="padding: 1.25rem; background: #070E1C; border-radius: 0.75rem; border: 1px solid var(--aarohan-border);">
+              <div class="step-badge" style="margin-bottom: 0.75rem;">2</div>
+              <h4 style="font-size: 0.875rem; font-weight: 700; color: #FFFFFF;">Day 2: Inorder vs Preorder Mechanics</h4>
+              <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.35rem;">
+                Correct the inversion mistake from CT-1. Trace tree B with left child A and right child C.
+              </p>
+              <div style="font-size: 0.6875rem; color: var(--aarohan-cyan); margin-top: 0.75rem;">
+                Interactive: AI Tutor Step-by-Step
+              </div>
+            </div>
+
+            <div style="padding: 1.25rem; background: #070E1C; border-radius: 0.75rem; border: 1px solid var(--aarohan-border);">
+              <div class="step-badge" style="margin-bottom: 0.75rem;">3</div>
+              <h4 style="font-size: 0.875rem; font-weight: 700; color: #FFFFFF;">Day 3: C Pseudo-code &amp; Practice</h4>
+              <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.35rem;">
+                Write void inorder(struct Node* root) without error. Solve 3 university practice problems.
+              </p>
+              <div style="font-size: 0.6875rem; color: var(--aarohan-cyan); margin-top: 0.75rem;">
+                Assessment: 5-Question Quiz
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = window.appStore.getCurrentUser();
+      if (!user) {
+        window.location.href = 'index.html';
+        return;
+      }
+      document.getElementById('sidebarUserName').innerText = user.name;
+      document.getElementById('sidebarUserRoll').innerText = (user.rollNo || '21EC103') + ' • ' + (user.department || 'ECE') + ' Sem 5';
+
+      renderDynamicGaps();
+
+      const gaps = window.appStore.getGaps();
+      if (gaps.length === 0) {
+        document.querySelector('.main-container').innerHTML = `
+          <div class="glass-panel" style="padding: 3.5rem 1.5rem; text-align: center; margin-top: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.7;">🎯</div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: #FFFFFF;">No Learning Gaps Detected Yet</h3>
+            <p style="font-size: 0.8125rem; color: var(--aarohan-text-secondary); max-width: 30rem; margin: 0.75rem auto 1.75rem; line-height: 1.5;">
+              Once you upload and scan an examination paper, your weak concepts, mark deductions, and prerequisite knowledge DAG map will appear here.
+            </p>
+            <a href="upload.html" class="btn-primary" style="display: inline-flex; padding: 0.75rem 1.5rem;">
+              <span>+ Upload Examination Paper &rarr;</span>
+            </a>
+          </div>
+        `;
+      }
+    });
+
+    function renderDynamicGaps() {
+      if (!window.appStore || !window.appStore.getGaps) return;
+      const gaps = window.appStore.getGaps();
+      const progress = window.appStore.getLearningProgress();
+
+      // Update tab label with active unresolved count
+      const tabWeak = document.getElementById('tabWeak');
+      if (tabWeak) {
+        tabWeak.innerText = `Weak Concepts (${progress.unresolvedGaps})`;
+      }
+
+      // Render the queue cards dynamically
+      const container = document.getElementById('gapsQueueList');
+      if (container && gaps.length > 0) {
+        container.innerHTML = gaps.map(gap => {
+          const isMastered = gap.status === 'mastered';
+          const borderColor = isMastered ? 'rgba(16, 185, 129, 0.4)' : 'rgba(245, 158, 11, 0.4)';
+          const bgColor = isMastered ? 'rgba(6, 30, 20, 0.5)' : 'rgba(28, 20, 10, 0.5)';
+          const scoreColor = isMastered ? '#34D399' : 'var(--aarohan-amber)';
+          const scoreText = isMastered ? '100%' : `${gap.score || 45}%`;
+          const icon = isMastered 
+            ? '<span style="font-size: 1rem; color: #34D399;">✔</span>' 
+            : '<span style="font-size: 1rem; color: var(--aarohan-amber);">⚠️</span>';
+          const subText = isMastered
+            ? '<span style="font-size: 0.6875rem; color: #86EFAC;">✔ Mastered in AI Tutor (+3.0 marks recovered)</span>'
+            : `<span style="font-size: 0.6875rem; color: #FCA5A5;">Identified in CT-1 (${gap.gap || '-3 marks'})</span>`;
+          const btnClass = isMastered ? 'btn-secondary' : 'btn-primary';
+          const btnLabel = isMastered ? 'Review Mastery &rarr;' : 'Learn Now &rarr;';
+          const prereqStr = (gap.prerequisites || ['Foundations']).join(', ');
+
+          return `
+            <div class="glass-panel" style="padding: 1.25rem; border-color: ${borderColor}; background: ${bgColor};">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    ${icon}
+                    <h4 style="font-size: 1rem; font-weight: 700; color: #FFFFFF;">${escapeHtml(gap.concept)}</h4>
+                  </div>
+                  <div style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.35rem;">
+                    Prerequisites: <strong style="color: var(--aarohan-cyan);">${escapeHtml(prereqStr)}</strong>
+                  </div>
+                </div>
+                <div style="text-align: right;">
+                  <span style="font-size: 1.25rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: ${scoreColor};">${scoreText}</span>
+                  <div style="font-size: 0.625rem; color: var(--aarohan-text-muted);">${isMastered ? 'Mastered' : 'Mastery'}</div>
+                </div>
+              </div>
+              <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 0.75rem;">
+                ${subText}
+                <a href="tutor.html?concept=${encodeURIComponent(gap.concept)}" class="${btnClass}" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;">
+                  ${btnLabel}
+                </a>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Check if Tree Traversal is mastered in DAG map
+      const isTreeMastered = window.appStore.isConceptMastered('Tree Traversal');
+      const targetNode = document.getElementById('dagTargetNode');
+      const targetStatus = document.getElementById('dagTargetStatus');
+      const targetDesc = document.getElementById('dagTargetDesc');
+      if (isTreeMastered && targetNode && targetStatus && targetDesc) {
+        targetNode.className = 'dag-node mastered';
+        targetNode.style.boxShadow = '0 0 20px rgba(16, 185, 129, 0.35)';
+        targetStatus.innerText = 'Mastered (100%)';
+        targetStatus.style.color = '#86EFAC';
+        targetDesc.innerText = 'Concept Mastered (+3.0 marks recovered)';
+        targetDesc.style.color = '#86EFAC';
+      }
+    }
+
+    function escapeHtml(text) {
+      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+      return String(text).replace(/[&<>"']/g, m => map[m]);
+    }
+
+    function switchView(view) {
+      const viewWeak = document.getElementById('viewWeakConcepts');
+      const viewPlan = document.getElementById('viewLearningPlan');
+      const queueCol = document.getElementById('gapsQueueCol');
+      const dagCol = document.getElementById('dagMapCol');
+
+      const btnWeak = document.getElementById('tabWeak');
+      const btnMap = document.getElementById('tabMap');
+      const btnPlan = document.getElementById('tabPlan');
+
+      btnWeak.className = 'btn-secondary';
+      btnMap.className = 'btn-secondary';
+      btnPlan.className = 'btn-secondary';
+
+      if (view === 'weakConcepts') {
+        btnWeak.className = 'btn-primary';
+        viewWeak.style.display = 'grid';
+        viewWeak.style.gridTemplateColumns = 'repeat(auto-fit, minmax(340px, 1fr))';
+        viewPlan.style.display = 'none';
+        if (queueCol) queueCol.style.display = 'flex';
+        if (dagCol) dagCol.style.display = 'flex';
+      } else if (view === 'prereqMap') {
+        btnMap.className = 'btn-primary';
+        viewWeak.style.display = 'grid';
+        viewWeak.style.gridTemplateColumns = '1fr';
+        viewPlan.style.display = 'none';
+        if (queueCol) queueCol.style.display = 'none';
+        if (dagCol) {
+          dagCol.style.display = 'flex';
+          dagCol.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      } else if (view === 'learningPlan') {
+        btnPlan.className = 'btn-primary';
+        viewWeak.style.display = 'none';
+        viewPlan.style.display = 'block';
+        viewPlan.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    function handleLogout() {
+      window.appStore.logout();
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
+

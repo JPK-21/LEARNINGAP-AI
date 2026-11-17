@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning-Gap AI — Analyse • Learn • Improve</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/store.js?v=20261115_report_v5"></script>
+</head>
+<body style="justify-content: space-between;">
+
+  <!-- Main Hero Layout -->
+  <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 2.5rem 1.5rem;">
+    <div style="max-width: 76rem; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3.5rem; align-items: center;">
+      
+      <!-- Left Presentation Column (Authentic Aarohan Hero) -->
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <!-- Amber Indicator Pill -->
+        <div class="indicator-pill">
+          <span class="indicator-dot"></span>
+          <span>Authorized Academic Learning Portal • University Academic Node</span>
+        </div>
+
+        <!-- Main Title & Subtitle -->
+        <div>
+          <h1 style="font-size: 2.75rem; line-height: 1.15; font-weight: 800;">
+            Examination Analysis & <br>
+            <span style="background: linear-gradient(to right, #60A5FA, #38BDF8, #BAE6FD); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+              Learning-Gap Diagnostics
+            </span>
+          </h1>
+          <p style="color: var(--aarohan-text-secondary); font-size: 0.9375rem; line-height: 1.6; margin-top: 1rem; max-width: 34rem;">
+            Turn your examination results into deep diagnostic insights. Identify question-wise mark deductions, uncover prerequisite conceptual gaps, and remediate weaknesses with source-grounded AI tutoring.
+          </p>
+        </div>
+
+        <!-- Aarohan Stats Pill Row -->
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+          <div class="stat-pill">
+            <span style="width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: #60A5FA;"></span>
+            <span>Exams Analysed: <strong>8</strong></span>
+            <span class="chip chip-blue">Evaluated</span>
+          </div>
+          <div class="stat-pill">
+            <span style="width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: #F59E0B;"></span>
+            <span>Active Gaps: <strong>5</strong></span>
+            <span class="chip chip-amber">Needs Focus</span>
+          </div>
+          <div class="stat-pill">
+            <span style="width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: #38BDF8;"></span>
+            <span>AI Tutor: <strong>Online</strong></span>
+            <span class="chip chip-cyan">Gemini 1.5</span>
+          </div>
+        </div>
+
+        <!-- Subtle Navigation Aid -->
+        <div style="padding-top: 0.5rem;">
+          <a href="admin-login.html" style="font-size: 0.8125rem; color: var(--aarohan-text-secondary); text-decoration: none; display: inline-flex; align-items: center; gap: 0.375rem;">
+            <span>Administrator or Faculty?</span>
+            <span style="color: var(--aarohan-cyan); font-weight: 600;">Sign in to Admin Console →</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Login & Register Card -->
+      <div style="max-width: 28rem; width: 100%; margin: 0 auto;">
+        <div class="glass-panel" style="padding: 2rem; border-color: rgba(56, 189, 248, 0.25); box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7);">
+          
+          <!-- Tab Switcher -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; background: #070E1C; padding: 0.25rem; border-radius: 0.625rem; border: 1px solid var(--aarohan-border); margin-bottom: 1.5rem;">
+            <button id="tabLoginBtn" onclick="switchAuthTab('login')" class="segmented-btn active" style="text-align: center; border: none;">
+              Login
+            </button>
+            <button id="tabRegisterBtn" onclick="switchAuthTab('register')" class="segmented-btn" style="text-align: center; border: none;">
+              Register
+            </button>
+          </div>
+
+          <!-- Alert / Status Banner -->
+          <div id="authAlert" style="display: none; padding: 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; margin-bottom: 1rem;"></div>
+
+          <!-- LOGIN FORM -->
+          <form id="loginForm" onsubmit="handleLogin(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div>
+              <h2 style="font-size: 1.25rem;">Welcome Back! 👋</h2>
+              <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.25rem;">
+                Sign in to inspect your examination feedback and learning gaps.
+              </p>
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #CBD5E1; margin-bottom: 0.375rem;">
+                College Email or Roll Number *
+              </label>
+              <input type="text" id="loginEmail" class="aarohan-input" placeholder="e.g. 21EC103 or student@clg.ac.in" required>
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #CBD5E1; margin-bottom: 0.375rem;">
+                Password *
+              </label>
+              <input type="password" id="loginPassword" class="aarohan-input" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 0.75rem;">
+              Sign In to Learning Portal
+            </button>
+          </form>
+
+          <!-- REGISTER FORM -->
+          <form id="registerForm" onsubmit="handleRegister(event)" style="display: none; flex-direction: column; gap: 0.875rem;">
+            <div>
+              <h2 style="font-size: 1.25rem;">Create Student Profile 🎓</h2>
+              <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.25rem;">
+                Register to track your academic performance.
+              </p>
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #CBD5E1; margin-bottom: 0.25rem;">Full Name *</label>
+              <input type="text" id="regName" class="aarohan-input" placeholder="e.g. Student Name" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+              <div>
+                <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #CBD5E1; margin-bottom: 0.25rem;">Roll Number *</label>
+                <input type="text" id="regRollNo" class="aarohan-input" placeholder="e.g. 21EC103" required>
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #CBD5E1; margin-bottom: 0.25rem;">Department *</label>
+                <select id="regDept" class="aarohan-input">
+                  <option value="ECE">ECE</option>
+                  <option value="CSE">CSE</option>
+                  <option value="EEE">EEE</option>
+                  <option value="MECH">MECH</option>
+                  <option value="IT">IT</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #CBD5E1; margin-bottom: 0.25rem;">College Email *</label>
+              <input type="email" id="regEmail" class="aarohan-input" placeholder="student@clg.ac.in" required>
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #CBD5E1; margin-bottom: 0.25rem;">Create Password *</label>
+              <input type="password" id="regPassword" class="aarohan-input" placeholder="Min 6 characters" required>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 0.75rem;">
+              Create Profile &amp; Sign In
+            </button>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function switchAuthTab(tab) {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const tabLoginBtn = document.getElementById('tabLoginBtn');
+      const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+      const alert = document.getElementById('authAlert');
+      alert.style.display = 'none';
+
+      if (tab === 'login') {
+        loginForm.style.display = 'flex';
+        registerForm.style.display = 'none';
+        tabLoginBtn.classList.add('active');
+        tabRegisterBtn.classList.remove('active');
+      } else {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'flex';
+        tabLoginBtn.classList.remove('active');
+        tabRegisterBtn.classList.add('active');
+      }
+    }
+
+    function showAlert(msg, isError = true) {
+      const alert = document.getElementById('authAlert');
+      alert.style.display = 'block';
+      if (isError) {
+        alert.style.background = 'rgba(36, 12, 22, 0.9)';
+        alert.style.border = '1px solid #4D1627';
+        alert.style.color = '#FCA5A5';
+      } else {
+        alert.style.background = 'rgba(11, 27, 51, 0.9)';
+        alert.style.border = '1px solid rgba(56, 189, 248, 0.4)';
+        alert.style.color = '#38BDF8';
+      }
+      alert.innerText = msg;
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const pass = document.getElementById('loginPassword').value;
+
+      const res = window.appStore.login(email, 'student', pass);
+      if (!res.success) {
+        showAlert(res.message, true);
+      } else {
+        showAlert('Welcome back, ' + res.user.name + '! Loading dashboard...', false);
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 500);
+      }
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const rollNo = document.getElementById('regRollNo').value;
+      const dept = document.getElementById('regDept').value;
+      const pass = document.getElementById('regPassword').value;
+
+      const user = window.appStore.registerStudent(name, email, rollNo, dept, pass);
+      showAlert('Profile registered successfully! Redirecting...', false);
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 500);
+    }
+  </script>
+
+</body>
+</html>
+

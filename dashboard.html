@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard — Learning-Gap AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/store.js?v=20261115_report_v5"></script>
+</head>
+<body>
+
+  <div class="app-layout">
+    
+    <!-- DESKTOP SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">LG</div>
+        <div>
+          <div style="font-weight: 800; font-size: 0.9375rem; color: #FFFFFF;">
+            Learning-Gap <span style="color: var(--aarohan-cyan);">AI</span>
+          </div>
+          <div style="font-size: 0.625rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: var(--aarohan-text-secondary); letter-spacing: 0.05em;">
+            Analyse • Learn • Improve
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link active">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="exam-overview.html" class="nav-link" id="navExamLink">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Exam Analysis</span>
+        </a>
+        <a href="gaps.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <span>Learning Gaps</span>
+        </a>
+        <a href="library.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>My Library</span>
+        </a>
+        <a href="tutor.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14h-2v-2h2zm0-4h-2V7h2z"/></svg>
+          <span>AI Tutor</span>
+        </a>
+        <a href="question-analysis.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span>Practice</span>
+        </a>
+        <a href="progress.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>My Progress</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div style="padding: 0.5rem 0.75rem; border-radius: 0.5rem; background: #070E1C; border: 1px solid var(--aarohan-border); margin-bottom: 0.5rem;">
+          <div id="sidebarUserName" style="font-size: 0.75rem; font-weight: 700; color: #FFFFFF;">Student</div>
+          <div id="sidebarUserRoll" style="font-size: 0.6875rem; color: var(--aarohan-cyan); font-family: 'JetBrains Mono', monospace;">ECE</div>
+        </div>
+        <button onclick="handleLogout()" class="btn-danger" style="width: 100%; justify-content: center;">
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-wrapper">
+      
+      <!-- Top Bar Greeting & Quota Status -->
+      <header style="border-bottom: 1px solid var(--aarohan-border); background: rgba(6, 12, 27, 0.85); backdrop-filter: blur(16px); padding: 1.125rem 2.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800;" id="greetingHeader">Good Morning 👋</h2>
+          <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.15rem;">Here's your academic learning overview.</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div class="stat-pill" style="border-color: rgba(56, 189, 248, 0.4);">
+            <span style="color: var(--aarohan-cyan);">⚡</span>
+            <span>AI Prompts: <strong id="promptsBadge">0</strong>/30 today</span>
+          </div>
+          <a href="upload.html" class="btn-primary" style="padding: 0.5rem 1rem;">
+            <span>+ Analyse Exam</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Main Dashboard Container -->
+      <main class="main-container">
+        
+        <!-- TOP 4 KPI CARDS -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+          
+          <div class="glass-panel" style="padding: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.75rem; color: var(--aarohan-text-secondary); font-weight: 600;">Exams Analysed</span>
+              <span class="chip chip-blue">Evaluated</span>
+            </div>
+            <div id="kpiExams" style="font-size: 2rem; font-weight: 800; margin-top: 0.5rem; color: #FFFFFF;">0</div>
+            <div style="font-size: 0.6875rem; color: var(--aarohan-text-secondary); margin-top: 0.25rem;">Continuous Assessments</div>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.75rem; color: var(--aarohan-text-secondary); font-weight: 600;">Concepts Tracked</span>
+              <span class="chip chip-cyan">Syllabus</span>
+            </div>
+            <div id="kpiConcepts" style="font-size: 2rem; font-weight: 800; margin-top: 0.5rem; color: #FFFFFF;">0</div>
+            <div style="font-size: 0.6875rem; color: var(--aarohan-text-secondary); margin-top: 0.25rem;">Course Curriculum Units</div>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.75rem; color: var(--aarohan-text-secondary); font-weight: 600;">Active Gaps</span>
+              <span class="chip chip-amber">Needs Action</span>
+            </div>
+            <div id="kpiGaps" style="font-size: 2rem; font-weight: 800; margin-top: 0.5rem; color: var(--aarohan-amber);">0</div>
+            <div style="font-size: 0.6875rem; color: var(--aarohan-text-secondary); margin-top: 0.25rem;">Prerequisite gaps identified</div>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.75rem; color: var(--aarohan-text-secondary); font-weight: 600;">Overall Growth</span>
+              <span class="chip chip-cyan">Progress</span>
+            </div>
+            <div id="kpiGrowth" style="font-size: 2rem; font-weight: 800; margin-top: 0.5rem; color: #38BDF8;">0%</div>
+            <div style="font-size: 0.6875rem; color: var(--aarohan-text-secondary); margin-top: 0.25rem;">Longitudinal mastery trend</div>
+          </div>
+
+        </div>
+
+        <!-- 2-COLUMN SECTION: Score Donut & Recent Activity -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+          
+          <!-- Overall Performance Gauge Card -->
+          <div class="glass-panel" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="font-size: 1rem;">Overall Performance</h3>
+                <span class="chip chip-blue">Average Score</span>
+              </div>
+              <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-bottom: 1.5rem;">
+                Combined mastery across all continuous assessments and quizzes.
+              </p>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: center; gap: 2.5rem; padding: 1rem 0;">
+              <!-- Donut Gauge SVG -->
+              <div style="position: relative; width: 8.5rem; height: 8.5rem;">
+                <svg viewBox="0 0 100 100" style="transform: rotate(-90deg); width: 100%; height: 100%;">
+                  <circle cx="50" cy="50" r="40" stroke="#0F1F3D" stroke-width="10" fill="none" />
+                  <circle id="donutCircle" cx="50" cy="50" r="40" stroke="#1D4ED8" stroke-width="10" stroke-dasharray="251.2" stroke-dashoffset="251.2" stroke-linecap="round" fill="none" />
+                </svg>
+                <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                  <span id="donutScore" style="font-size: 1.75rem; font-weight: 800; color: #FFFFFF;">--</span>
+                  <span style="font-size: 0.625rem; color: var(--aarohan-cyan); font-family: 'JetBrains Mono', monospace;">Accuracy</span>
+                </div>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.75rem;">
+                <div>
+                  <div style="color: var(--aarohan-text-secondary);">Highest Scoring Subject</div>
+                  <strong id="highSubj" style="color: #FFFFFF;">--</strong>
+                </div>
+                <div>
+                  <div style="color: var(--aarohan-text-secondary);">Focus Area Needed</div>
+                  <strong id="focusSubj" style="color: var(--aarohan-amber);">--</strong>
+                </div>
+                <div>
+                  <a id="examLinkBtn" href="upload.html" class="btn-secondary" style="padding: 0.4rem 0.85rem; font-size: 0.75rem;">
+                    Upload First Exam &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div id="growthNote" style="border-top: 1px solid var(--aarohan-border); padding-top: 0.875rem; font-size: 0.75rem; color: var(--aarohan-text-secondary);">
+              Upload an examination paper to view performance analytics.
+            </div>
+          </div>
+
+          <!-- Recent Activity Card -->
+          <div class="glass-panel" style="padding: 1.5rem; display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <h3 style="font-size: 1rem; margin: 0;">Recent Activity</h3>
+                <span class="chip chip-cyan" id="activityCountBadge" style="font-size: 0.625rem; padding: 0.15rem 0.45rem;">Latest</span>
+              </div>
+              <span style="font-size: 0.6875rem; color: var(--aarohan-text-secondary);">Real-time study log</span>
+            </div>
+
+            <div id="recentActivityList" style="display: flex; flex-direction: column; gap: 0.35rem; max-height: 285px; overflow-y: auto; padding-right: 0.35rem;">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- NEXT RECOMMENDED ACTION BANNER -->
+        <div id="nextActionCard" class="glass-panel" style="padding: 1.5rem; border-color: rgba(56, 189, 248, 0.35); background: linear-gradient(135deg, rgba(11, 21, 40, 0.95), rgba(15, 30, 60, 0.4)); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: var(--aarohan-cyan);">
+              💡
+            </div>
+            <div>
+              <div id="actionBadge" style="font-size: 0.6875rem; font-weight: 700; color: var(--aarohan-cyan); text-transform: uppercase; letter-spacing: 0.05em;">Get Started</div>
+              <h4 id="actionTitle" style="font-size: 1.125rem; margin-top: 0.2rem;">Upload an examination paper and answer sheet</h4>
+              <p id="actionDesc" style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.25rem;">
+                AI will extract questions, match them to faculty corrections, and map your prerequisite learning gaps.
+              </p>
+            </div>
+          </div>
+          <a id="actionBtn" href="upload.html" class="btn-primary" style="padding: 0.75rem 1.25rem;">
+            <span>+ Upload Exam &rarr;</span>
+          </a>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = window.appStore.getCurrentUser();
+      if (!user) {
+        window.location.href = 'index.html';
+        return;
+      }
+      document.getElementById('greetingHeader').innerText = 'Good Morning, ' + (user.name ? user.name.split(' ')[0] : 'Student') + ' 👋';
+      document.getElementById('sidebarUserName').innerText = user.name || 'Student';
+      document.getElementById('sidebarUserRoll').innerText = (user.rollNo || '21EC103') + ' • ' + (user.department || 'ECE');
+      document.getElementById('promptsBadge').innerText = window.appStore.state.promptsUsedToday || 0;
+
+      renderDashboardData();
+    });
+
+    function renderDashboardData() {
+      const questions = window.appStore.getQuestions();
+      const gaps = window.appStore.getGaps();
+      const activities = window.appStore.getActivities();
+      const examsCount = window.appStore.state.examsAnalyzed || (questions.length > 0 ? 1 : 0);
+      const progress = window.appStore.getLearningProgress ? window.appStore.getLearningProgress() : {
+        unresolvedGaps: gaps.length,
+        currentPercentage: 72,
+        growthPercentage: 16
+      };
+
+      document.getElementById('kpiExams').innerText = examsCount;
+      document.getElementById('kpiGaps').innerText = progress.unresolvedGaps;
+
+      if (questions.length > 0) {
+        const uniqueConcepts = new Set(questions.map(q => q.conceptTested)).size;
+        document.getElementById('kpiConcepts').innerText = uniqueConcepts;
+        document.getElementById('kpiGrowth').innerText = '+' + progress.growthPercentage + '%';
+
+        const pct = progress.currentPercentage;
+        document.getElementById('donutScore').innerText = pct + '%';
+        const offset = 251.2 - (251.2 * pct / 100);
+        document.getElementById('donutCircle').style.strokeDashoffset = offset;
+        document.getElementById('highSubj').innerText = 'Linear Data Structures (100%)';
+
+        // Focus topic: first unresolved gap or celebratory message if none
+        const nextGap = gaps.find(g => g.status !== 'mastered');
+        const nextConceptName = nextGap ? (nextGap.concept || nextGap.name) : null;
+
+        if (nextConceptName) {
+          document.getElementById('focusSubj').innerText = nextConceptName;
+          document.getElementById('growthNote').innerText = `▲ Recovered ${(progress.currentExamScore - 36.0).toFixed(1)} marks through AI mastery.`;
+          document.getElementById('actionBadge').innerText = 'Next Recommended Action';
+          document.getElementById('actionBadge').style.color = 'var(--aarohan-amber)';
+          document.getElementById('actionTitle').innerText = 'Remediate ' + nextConceptName;
+          document.getElementById('actionDesc').innerText = 'Prerequisite gaps detected. Start a 10-minute guided session with AI Tutor to recover marks.';
+          document.getElementById('actionBtn').innerText = 'Start Learning with AI Tutor →';
+          document.getElementById('actionBtn').href = 'tutor.html?concept=' + encodeURIComponent(nextConceptName);
+        } else {
+          document.getElementById('focusSubj').innerText = 'All Gaps Resolved (100%)';
+          document.getElementById('growthNote').innerText = '🎉 All detected concept gaps successfully mastered!';
+          document.getElementById('actionBadge').innerText = 'Mastery Milestone Achieved';
+          document.getElementById('actionBadge').style.color = '#34D399';
+          document.getElementById('actionTitle').innerText = 'All CT-1 Learning Gaps Resolved!';
+          document.getElementById('actionDesc').innerText = 'You have mastered all flagged syllabus concepts. Keep practicing with AI Tutor to prepare for CT-2!';
+          document.getElementById('actionBtn').innerText = 'Explore Advanced Concepts with AI Tutor →';
+          document.getElementById('actionBtn').href = 'tutor.html?concept=Advanced%20Graph%20Algorithms';
+        }
+
+        document.getElementById('examLinkBtn').innerText = 'View Exam Breakdown →';
+        document.getElementById('examLinkBtn').href = 'exam-overview.html';
+      } else {
+        document.getElementById('kpiConcepts').innerText = '0';
+        document.getElementById('kpiGrowth').innerText = '0%';
+        document.getElementById('donutScore').innerText = '--';
+        document.getElementById('donutCircle').style.strokeDashoffset = 251.2;
+        document.getElementById('highSubj').innerText = 'None yet';
+        document.getElementById('focusSubj').innerText = 'None yet';
+        document.getElementById('growthNote').innerText = 'Upload an examination paper to view diagnostic analytics.';
+        document.getElementById('examLinkBtn').innerText = 'Upload Exam →';
+        document.getElementById('examLinkBtn').href = 'upload.html';
+      }
+
+      // Render recent activity
+      const actContainer = document.getElementById('recentActivityList');
+      actContainer.innerHTML = '';
+
+      if (activities.length === 0 && questions.length === 0) {
+        const countBadge = document.getElementById('activityCountBadge');
+        if (countBadge) countBadge.innerText = '0 logged';
+        actContainer.innerHTML = `
+          <div style="text-align: center; color: var(--aarohan-text-secondary); padding: 2.25rem 1rem; font-size: 0.8125rem;">
+            <span class="blended-icon blended-blue blended-icon-md" style="margin: 0 auto 0.5rem auto; display: flex;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </span>
+            <div style="font-weight: 600; color: #FFFFFF; margin-bottom: 0.25rem;">No activities logged yet</div>
+            <div style="font-size: 0.75rem;">Upload an examination paper to begin learning-gap analysis.</div>
+          </div>
+        `;
+      } else {
+        const displayActs = activities.length > 0 ? activities : [
+          {
+            title: 'Analysed: CT-1 Data Structures',
+            subtitle: '36/50 Marks • 4 Learning gaps detected',
+            time: 'Recently',
+            type: 'exam',
+            link: 'exam-overview.html',
+            actionLabel: 'Review'
+          }
+        ];
+
+        const countBadge = document.getElementById('activityCountBadge');
+        if (countBadge) {
+          countBadge.innerText = `${displayActs.length} logged`;
+        }
+
+        // Dynamically configure sidebar Exam Analysis link based on data state
+        const navExam = document.getElementById('navExamLink');
+        if (navExam) {
+          navExam.href = questions.length > 0 ? 'exam-overview.html' : 'upload.html';
+        }
+
+        displayActs.forEach((act, idx) => {
+          const title = act.title || act.text || 'Academic Activity';
+          const subtitle = act.subtitle || 'Activity recorded';
+          const time = act.time || act.timestamp || 'Recently';
+          const type = act.type || (act.icon === '🎉' ? 'mastery' : (act.icon === '💬' ? 'tutor' : 'exam'));
+          const link = act.link || (type === 'mastery' ? 'gaps.html' : (type === 'tutor' ? 'tutor.html' : 'exam-overview.html'));
+          const actionLabel = act.actionLabel || (type === 'mastery' ? 'View Gaps' : (type === 'tutor' ? 'Open Tutor' : 'Review'));
+
+          let iconHtml = '';
+          if (type === 'mastery') {
+            iconHtml = '<span class="blended-icon blended-emerald blended-icon-xs" style="width: 1.75rem; height: 1.75rem; flex-shrink: 0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></span>';
+          } else if (type === 'tutor') {
+            iconHtml = '<span class="blended-icon blended-cyan blended-icon-xs" style="width: 1.75rem; height: 1.75rem; flex-shrink: 0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>';
+          } else {
+            iconHtml = '<span class="blended-icon blended-blue blended-icon-xs" style="width: 1.75rem; height: 1.75rem; flex-shrink: 0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>';
+          }
+
+          const isLast = idx === displayActs.length - 1;
+          const row = document.createElement('div');
+          row.style.cssText = `display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.55rem 0.6rem; border-radius: 0.5rem; transition: background 0.15s ease; ${isLast ? '' : 'border-bottom: 1px solid rgba(255, 255, 255, 0.05);'}`;
+          row.onmouseenter = () => row.style.background = 'rgba(255, 255, 255, 0.03)';
+          row.onmouseleave = () => row.style.background = 'transparent';
+
+          row.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 0.65rem; min-width: 0; flex: 1;">
+              ${iconHtml}
+              <div style="min-width: 0; flex: 1;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #FFFFFF; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${title}</div>
+                <div style="font-size: 0.6875rem; color: var(--aarohan-text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 0.1rem;">${subtitle}</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0;">
+              <span style="font-size: 0.625rem; color: var(--aarohan-text-muted); font-family: 'JetBrains Mono', monospace;">${time}</span>
+              <a href="${link}" class="btn-secondary" style="padding: 0.2rem 0.5rem; font-size: 0.625rem; white-space: nowrap;">${actionLabel} &rarr;</a>
+            </div>
+          `;
+          actContainer.appendChild(row);
+        });
+      }
+    }
+
+    function handleLogout() {
+      window.appStore.logout();
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

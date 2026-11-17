@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal — Learning-Gap AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/store.js?v=20261115_report_v5"></script>
+</head>
+<body>
+
+  <div class="app-layout">
+    
+    <!-- ADMIN DESKTOP SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo" style="background: linear-gradient(135deg, #2563EB, #1D4ED8);">LG</div>
+        <div>
+          <div style="font-weight: 800; font-size: 0.9375rem; color: #FFFFFF;">
+            Learning-Gap <span style="color: var(--aarohan-cyan);">AI</span>
+          </div>
+          <div style="font-size: 0.625rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: var(--aarohan-amber); letter-spacing: 0.05em;">
+            Admin Console
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button onclick="switchAdminSection('dashboard')" id="nav-dashboard" class="nav-link active" style="width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z"/></svg>
+          <span>Dashboard</span>
+        </button>
+        <button onclick="switchAdminSection('users')" id="nav-users" class="nav-link" style="width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Users Management</span>
+        </button>
+        <button onclick="switchAdminSection('academic')" id="nav-academic" class="nav-link" style="width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <span>Academic Setup</span>
+        </button>
+        <button onclick="switchAdminSection('resources')" id="nav-resources" class="nav-link" style="width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Resource Management</span>
+        </button>
+        <button onclick="switchAdminSection('settings')" id="nav-settings" class="nav-link" style="width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>System &amp; AI Control</span>
+        </button>
+        <button onclick="switchAdminSection('audit')" id="nav-audit" class="nav-link" style="width: 100%; border: none; background: none; text-align: left; cursor: pointer;">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+          <span>Audit Logs</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div style="padding: 0.5rem 0.75rem; border-radius: 0.5rem; background: #070E1C; border: 1px solid var(--aarohan-border); margin-bottom: 0.5rem;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: #FFFFFF;">System Administrator</div>
+          <div style="font-size: 0.6875rem; color: var(--aarohan-amber); font-family: 'JetBrains Mono', monospace;">ADM-001 • Super Admin</div>
+        </div>
+        <button onclick="handleAdminLogout()" class="btn-danger" style="width: 100%; justify-content: center;">
+          <span>Sign Out Admin</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ADMIN MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- Top Bar -->
+      <header style="border-bottom: 1px solid var(--aarohan-border); background: rgba(6, 12, 27, 0.85); backdrop-filter: blur(16px); padding: 1.125rem 2.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800;" id="sectionTitle">Administrator Dashboard (Overview)</h2>
+          <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.15rem;" id="sectionSubtitle">
+            Overview of platform usage, model quota, security status and system health.
+          </p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC; border-color: rgba(34, 197, 94, 0.3);">
+            ● AI Engine Healthy
+          </span>
+          <a href="dashboard.html" class="btn-secondary" style="padding: 0.45rem 0.9rem; font-size: 0.75rem;">
+            <span>Switch to Student View &rarr;</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- ADMIN MAIN CONTAINER -->
+      <main class="main-container">
+        
+        <!-- SECTION 1: DASHBOARD OVERVIEW (Screen B) -->
+        <div id="sec-dashboard" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          
+          <!-- 4 KPI Cards -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
+            <div class="glass-panel" style="padding: 1.25rem;">
+              <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--aarohan-text-secondary); font-weight: 700;">Total Users</div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: #FFFFFF; font-family: 'JetBrains Mono', monospace; margin: 0.35rem 0;" id="kpiTotalUsers">2,436</div>
+              <div style="font-size: 0.6875rem; color: #4ADE80;">▲ +12% from last term</div>
+            </div>
+
+            <div class="glass-panel" style="padding: 1.25rem;">
+              <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--aarohan-text-secondary); font-weight: 700;">Active Learners</div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: #FFFFFF; font-family: 'JetBrains Mono', monospace; margin: 0.35rem 0;" id="kpiActiveUsers">2,301</div>
+              <div style="font-size: 0.6875rem; color: var(--aarohan-cyan);">94.4% Active Ratio</div>
+            </div>
+
+            <div class="glass-panel" style="padding: 1.25rem;">
+              <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--aarohan-text-secondary); font-weight: 700;">Analyzed Documents</div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: #FFFFFF; font-family: 'JetBrains Mono', monospace; margin: 0.35rem 0;" id="kpiDocs">0</div>
+              <div style="font-size: 0.6875rem; color: var(--aarohan-cyan);">OCR &amp; Rubric Mappings</div>
+            </div>
+
+            <div class="glass-panel" style="padding: 1.25rem;">
+              <div style="font-size: 0.6875rem; text-transform: uppercase; color: var(--aarohan-text-secondary); font-weight: 700;">Storage Used</div>
+              <div style="font-size: 1.75rem; font-weight: 800; color: #FFFFFF; font-family: 'JetBrains Mono', monospace; margin: 0.35rem 0;" id="kpiStorage">0 MB</div>
+              <div style="font-size: 0.6875rem; color: var(--aarohan-text-muted);">Encrypted Archive</div>
+            </div>
+          </div>
+
+          <!-- Platform Usage & Role Breakdown -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem;">
+            
+            <!-- Usage SVG Chart -->
+            <div class="glass-panel" style="padding: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h4 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--aarohan-text-secondary);">
+                  Platform Usage Trajectory
+                </h4>
+                <span class="chip chip-blue">Last 30 Days</span>
+              </div>
+
+              <div style="height: 180px; width: 100%;">
+                <svg viewBox="0 0 500 180" style="width: 100%; height: 100%;">
+                  <line x1="40" y1="40" x2="480" y2="40" stroke="#142343" stroke-dasharray="3 3" />
+                  <line x1="40" y1="90" x2="480" y2="90" stroke="#142343" stroke-dasharray="3 3" />
+                  <line x1="40" y1="140" x2="480" y2="140" stroke="#142343" stroke-dasharray="3 3" />
+
+                  <!-- Logins Curve (Green) -->
+                  <path d="M 50 130 Q 150 90, 250 80 T 450 35" stroke="#4ADE80" stroke-width="3" fill="none" />
+                  <!-- Uploads Curve (Cyan) -->
+                  <path d="M 50 145 Q 150 130, 250 110 T 450 65" stroke="#38BDF8" stroke-width="2.5" fill="none" stroke-dasharray="4 4" />
+
+                  <text x="50" y="170" fill="#94A3B8" font-size="10">Jan 1</text>
+                  <text x="180" y="170" fill="#94A3B8" font-size="10">Jan 10</text>
+                  <text x="310" y="170" fill="#94A3B8" font-size="10">Jan 20</text>
+                  <text x="440" y="170" fill="#94A3B8" font-size="10">Jan 30</text>
+                </svg>
+              </div>
+
+              <div style="display: flex; gap: 1.5rem; justify-content: center; font-size: 0.75rem; margin-top: 0.75rem;">
+                <span style="color: #4ADE80; font-weight: 600;">● Student Logins</span>
+                <span style="color: var(--aarohan-cyan); font-weight: 600;">-- Exam Uploads</span>
+              </div>
+            </div>
+
+            <!-- Users by Role & Microservice Health -->
+            <div class="glass-panel" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+              <h4 style="font-size: 0.875rem; font-weight: 700; text-transform: uppercase; color: var(--aarohan-text-secondary); margin-bottom: 0.75rem;">
+                System Health &amp; Microservices
+              </h4>
+
+              <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.8125rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem; background: #070E1C; border-radius: 0.5rem; border: 1px solid var(--aarohan-border);">
+                  <span>AI Tutor Inference Core</span>
+                  <span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC;">Operational</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem; background: #070E1C; border-radius: 0.5rem; border: 1px solid var(--aarohan-border);">
+                  <span>Document OCR &amp; Rubric Parser</span>
+                  <span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC;">Operational</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem; background: #070E1C; border-radius: 0.5rem; border: 1px solid var(--aarohan-border);">
+                  <span>PostgreSQL Knowledge Store</span>
+                  <span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC;">Operational</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.75rem; background: #070E1C; border-radius: 0.5rem; border: 1px solid var(--aarohan-border);">
+                  <span>Cloudflare Edge Cache</span>
+                  <span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC;">Operational</span>
+                </div>
+              </div>
+
+              <div style="margin-top: 1rem; border-top: 1px solid var(--aarohan-border); padding-top: 0.75rem; font-size: 0.75rem; color: var(--aarohan-cyan);">
+                Role Composition: <strong>96.8% Students</strong> • <strong>3.2% Admins</strong>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- SECTION 2: USERS MANAGEMENT (Screen C & Modals) -->
+        <div id="sec-users" style="display: none; flex-direction: column; gap: 1.5rem;">
+          
+          <div class="glass-panel" style="padding: 1.25rem 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+            
+            <!-- User Status Filters -->
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="userStatusTabs">
+              <button onclick="filterUsers('all')" class="btn-primary" id="btnUserAll" style="font-size: 0.75rem; padding: 0.35rem 0.85rem;">All Users (<span id="countAll">2,436</span>)</button>
+              <button onclick="filterUsers('active')" class="btn-secondary" id="btnUserActive" style="font-size: 0.75rem; padding: 0.35rem 0.85rem;">Active (<span id="countActive">2,301</span>)</button>
+              <button onclick="filterUsers('suspended')" class="btn-secondary" id="btnUserSuspended" style="font-size: 0.75rem; padding: 0.35rem 0.85rem;">Suspended (<span id="countSuspended">47</span>)</button>
+              <button onclick="filterUsers('revoked')" class="btn-secondary" id="btnUserRevoked" style="font-size: 0.75rem; padding: 0.35rem 0.85rem;">Revoked (<span id="countRevoked">88</span>)</button>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <input type="text" id="userSearchInput" oninput="searchUsers()" placeholder="Search name, roll no, email..." class="aarohan-input" style="font-size: 0.8125rem; width: 16rem; padding: 0.45rem 0.85rem;">
+              <button onclick="openAddUserModal()" class="btn-primary" style="padding: 0.45rem 0.9rem; font-size: 0.8125rem;">
+                + Add User
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Users Table -->
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <div style="overflow-x: auto;">
+              <table class="aarohan-table">
+                <thead>
+                  <tr>
+                    <th>Name &amp; Email</th>
+                    <th>Roll No</th>
+                    <th>Department</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Last Active</th>
+                    <th style="text-align: right;">Manage</th>
+                  </tr>
+                </thead>
+                <tbody id="userTableBody">
+                  <!-- Dynamically populated from store -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SECTION 3: ACADEMIC SETUP (Screen F) -->
+        <div id="sec-academic" style="display: none; flex-direction: column; gap: 1.5rem;">
+          
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+              <div>
+                <h3 style="font-size: 1rem;">Academic Structure &amp; Curriculum Registry</h3>
+                <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.2rem;">
+                  Departments, course codes, and unit prerequisite graphs.
+                </p>
+              </div>
+              <button onclick="alert('Department added to curriculum.')" class="btn-primary" style="padding: 0.45rem 0.85rem; font-size: 0.75rem;">
+                + Add Department
+              </button>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="aarohan-table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Department Name</th>
+                    <th>Programs</th>
+                    <th>Enrolled Students</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong style="color: var(--aarohan-cyan);">ECE</strong></td>
+                    <td>Electronics &amp; Communication Engineering</td>
+                    <td>2</td>
+                    <td>613</td>
+                    <td><span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC;">Active</span></td>
+                    <td style="text-align: right;"><button type="button" onclick="openDepartmentModal('ECE', 'Electronics &amp; Communication Engineering', 2, 613)" class="btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">Configure</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong style="color: var(--aarohan-cyan);">CSE</strong></td>
+                    <td>Computer Science &amp; Engineering</td>
+                    <td>2</td>
+                    <td>754</td>
+                    <td><span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC;">Active</span></td>
+                    <td style="text-align: right;"><button type="button" onclick="openDepartmentModal('CSE', 'Computer Science &amp; Engineering', 2, 754)" class="btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">Configure</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong style="color: var(--aarohan-cyan);">EEE</strong></td>
+                    <td>Electrical &amp; Electronics Engineering</td>
+                    <td>2</td>
+                    <td>412</td>
+                    <td><span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC;">Active</span></td>
+                    <td style="text-align: right;"><button type="button" onclick="openDepartmentModal('EEE', 'Electrical &amp; Electronics Engineering', 2, 412)" class="btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">Configure</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong style="color: var(--aarohan-cyan);">ME</strong></td>
+                    <td>Mechanical Engineering</td>
+                    <td>2</td>
+                    <td>355</td>
+                    <td><span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC;">Active</span></td>
+                    <td style="text-align: right;"><button type="button" onclick="openDepartmentModal('ME', 'Mechanical Engineering', 2, 355)" class="btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">Configure</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong style="color: var(--aarohan-cyan);">IT</strong></td>
+                    <td>Information Technology</td>
+                    <td>1</td>
+                    <td>287</td>
+                    <td><span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC;">Active</span></td>
+                    <td style="text-align: right;"><button type="button" onclick="openDepartmentModal('IT', 'Information Technology', 1, 287)" class="btn-secondary" style="padding: 0.25rem 0.6rem; font-size: 0.75rem;">Configure</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SECTION 4: RESOURCE MANAGEMENT (Screen G) -->
+        <div id="sec-resources" style="display: none; flex-direction: column; gap: 1.5rem;">
+          
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <div>
+                <h3 style="font-size: 1rem;">Resource &amp; Storage Management</h3>
+                <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.2rem;">
+                  All uploaded university syllabi, textbooks, and examination scripts.
+                </p>
+              </div>
+              <a href="library.html" class="btn-primary" style="padding: 0.45rem 0.9rem; font-size: 0.75rem;">
+                + Add Academic Resource
+              </a>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="aarohan-table">
+                <thead>
+                  <tr>
+                    <th>Resource Name</th>
+                    <th>Type</th>
+                    <th>Subject</th>
+                    <th>Size</th>
+                    <th>Status</th>
+                    <th>Uploaded By</th>
+                    <th style="text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="adminResourceTableBody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SECTION 5: SYSTEM & AI CONTROL (Screen H) -->
+        <div id="sec-settings" style="display: none; flex-direction: column; gap: 1.5rem;">
+          
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
+              <div>
+                <h3 style="font-size: 1rem; margin-bottom: 0.35rem;">Universal AI Gateway &amp; LLM Orchestrator</h3>
+                <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary);">
+                  Configure institutional AI providers, model routing, API credentials, and student prompt safety rate limits.
+                </p>
+              </div>
+              <span class="chip chip-cyan" id="adminAiStatusBadge">Multi-Model Engine Active</span>
+            </div>
+
+            <form onsubmit="handleSaveSettings(event)" style="display: flex; flex-direction: column; gap: 1.25rem; max-width: 42rem;">
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--aarohan-cyan); margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    1. AI Provider Engine
+                  </label>
+                  <select id="settingProvider" onchange="handleAdminProviderChange(this.value)" class="aarohan-input" style="background: #070E1C; font-weight: 600;">
+                    <option value="nvidia">NVIDIA Nemotron (NVIDIA NIM)</option>
+                    <option value="groq">Groq (Ultra-Fast Llama 3.3)</option>
+                    <option value="deepseek">DeepSeek (V3 / R1 Reasoner)</option>
+                    <option value="openai">OpenAI (GPT-4o / GPT-4o-mini)</option>
+                    <option value="openrouter">OpenRouter (Unified Gateway)</option>
+                    <option value="custom">Custom / Local AI (Ollama / vLLM on localhost)</option>
+                    <option value="gemini">Google Gemini (Cloudflare Serverless)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--aarohan-cyan); margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    2. Active Model
+                  </label>
+                  <select id="settingModel" class="aarohan-input" style="background: #070E1C;">
+                    <!-- Dynamically populated based on provider -->
+                  </select>
+                </div>
+              </div>
+
+              <div id="settingCustomUrlGroup" style="display: none;">
+                <label style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--aarohan-text-secondary); margin-bottom: 0.35rem;">
+                  Custom Endpoint URL (OpenAI-compatible)
+                </label>
+                <input type="text" id="settingCustomUrl" placeholder="http://localhost:11434/v1" class="aarohan-input" style="font-family: monospace;">
+                <div style="font-size: 0.6875rem; color: var(--aarohan-text-muted); margin-top: 0.25rem;">
+                  Compatible with self-hosted Ollama, vLLM, LM Studio, or private university cluster.
+                </div>
+              </div>
+
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                  <label id="settingApiKeyLabel" style="font-size: 0.75rem; font-weight: 600; color: var(--aarohan-text-secondary);">
+                    API Key
+                  </label>
+                  <button type="button" onclick="testAdminConnection()" id="adminTestConnBtn" class="btn-secondary" style="font-size: 0.6875rem; padding: 0.2rem 0.6rem;">
+                    ⚡ Test Provider Connection
+                  </button>
+                </div>
+                <input type="password" id="settingApiKey" placeholder="Enter provider API key..." class="aarohan-input" style="font-family: monospace;">
+                <div id="settingKeyHelp" style="font-size: 0.6875rem; color: var(--aarohan-text-muted); margin-top: 0.35rem;">
+                  Stored securely in local system storage. Never exposed to unauthorized endpoints.
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <label style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--aarohan-text-secondary); margin-bottom: 0.35rem;">
+                    Daily Prompts Limit / Student
+                  </label>
+                  <input type="number" id="settingPromptLimit" min="5" max="100" class="aarohan-input" value="30">
+                </div>
+
+                <div>
+                  <label style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--aarohan-text-secondary); margin-bottom: 0.35rem;">
+                    Max Exam Uploads / Month
+                  </label>
+                  <input type="number" id="settingExamLimit" min="1" max="50" class="aarohan-input" value="10">
+                </div>
+              </div>
+
+              <div style="padding: 1rem; background: rgba(36, 12, 22, 0.4); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 0.625rem; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                  <div style="font-size: 0.8125rem; font-weight: 700; color: #FCA5A5;">AI Tutor Global Killswitch</div>
+                  <div style="font-size: 0.6875rem; color: var(--aarohan-text-secondary); margin-top: 0.15rem;">Immediately halts student AI tutor queries platform-wide.</div>
+                </div>
+                <input type="checkbox" id="settingKillswitch" style="width: 1.25rem; height: 1.25rem; accent-color: var(--aarohan-blue);">
+              </div>
+
+              <div>
+                <button type="submit" class="btn-primary" style="padding: 0.75rem 1.5rem;">
+                  Save Universal AI Gateway Configuration
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+
+        <!-- SECTION 6: AUDIT LOGS (Screen I) -->
+        <div id="sec-audit" style="display: none; flex-direction: column; gap: 1.5rem;">
+          
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <div>
+                <h3 style="font-size: 1rem;">Security &amp; Operational Audit Trail</h3>
+                <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.2rem;">
+                  Chronological tamper-evident records of all administrator actions, access revocations, and system updates.
+                </p>
+              </div>
+              <button onclick="alert('Exporting full audit logs CSV...')" class="btn-secondary" style="padding: 0.4rem 0.85rem; font-size: 0.75rem;">
+                Export CSV
+              </button>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="aarohan-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                    <th>Details</th>
+                    <th>IP Address</th>
+                  </tr>
+                </thead>
+                <tbody id="auditTableBody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- ACTION MODALS (Matching ref_admin_screens.jpg bottom) -->
+
+  <!-- MODAL: ADD USER -->
+  <div class="modal-overlay" id="addUserModal">
+    <div class="modal-card">
+      <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 1rem;">Add New User Account</h3>
+      <form onsubmit="handleAddUserSubmit(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <label style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--aarohan-text-secondary); margin-bottom: 0.25rem;">Full Name *</label>
+          <input type="text" id="addUserName" required class="aarohan-input" placeholder="e.g. Sneha R">
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--aarohan-text-secondary); margin-bottom: 0.25rem;">Email Address *</label>
+          <input type="email" id="addUserEmail" required class="aarohan-input" placeholder="sneha.r@clg.ac.in">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+          <div>
+            <label style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--aarohan-text-secondary); margin-bottom: 0.25rem;">Roll No</label>
+            <input type="text" id="addUserRoll" class="aarohan-input" placeholder="21EC005">
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--aarohan-text-secondary); margin-bottom: 0.25rem;">Department</label>
+            <input type="text" id="addUserDept" class="aarohan-input" value="ECE">
+          </div>
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.75rem; font-weight: 600; color: var(--aarohan-text-secondary); margin-bottom: 0.25rem;">Role</label>
+          <select id="addUserRole" class="aarohan-input" style="background: #070E1C;">
+            <option value="student">Student</option>
+            <option value="admin">Administrator</option>
+          </select>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem;">
+          <button type="button" onclick="closeModal('addUserModal')" class="btn-secondary">Cancel</button>
+          <button type="submit" class="btn-primary">Create User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: REVOKE ACCESS (Screen bottom) -->
+  <div class="modal-overlay" id="revokeModal">
+    <div class="modal-card" style="border-color: rgba(239, 68, 68, 0.4);">
+      <div style="display: flex; items-center; gap: 0.75rem; margin-bottom: 0.75rem; color: #FCA5A5;">
+        <span style="font-size: 1.5rem;">⚠️</span>
+        <h3 style="font-size: 1.125rem; font-weight: 800; color: #FFFFFF;">Revoke Access</h3>
+      </div>
+      <p style="font-size: 0.8125rem; color: var(--aarohan-text-secondary); line-height: 1.5;">
+        Revoke access for <strong id="revokeTargetName" style="color: #FFFFFF;">User</strong>? The user will no longer be able to log in. Their academic diagnostic data will be retained.
+      </p>
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+        <button onclick="closeModal('revokeModal')" class="btn-secondary">Cancel</button>
+        <button onclick="confirmRevoke()" class="btn-danger" style="padding: 0.6rem 1.25rem;">Revoke Access</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SUSPEND ACCOUNT (Screen bottom) -->
+  <div class="modal-overlay" id="suspendModal">
+    <div class="modal-card" style="border-color: rgba(245, 158, 11, 0.4);">
+      <div style="display: flex; items-center; gap: 0.75rem; margin-bottom: 0.75rem; color: var(--aarohan-amber);">
+        <span style="font-size: 1.5rem;">⏸</span>
+        <h3 style="font-size: 1.125rem; font-weight: 800; color: #FFFFFF;">Suspend Account</h3>
+      </div>
+      <p style="font-size: 0.8125rem; color: var(--aarohan-text-secondary); line-height: 1.5;">
+        Suspend account for <strong id="suspendTargetName" style="color: #FFFFFF;">User</strong>? The user cannot access the platform temporarily. You can reactivate it later.
+      </p>
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+        <button onclick="closeModal('suspendModal')" class="btn-secondary">Cancel</button>
+        <button onclick="confirmSuspend()" class="btn-primary" style="background: var(--aarohan-amber); color: #000; border-color: var(--aarohan-amber);">Suspend</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DELETE ACCOUNT (Screen bottom) -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal-card" style="border-color: rgba(239, 68, 68, 0.6);">
+      <div style="display: flex; items-center; gap: 0.75rem; margin-bottom: 0.75rem; color: #EF4444;">
+        <span style="font-size: 1.5rem;">🗑</span>
+        <h3 style="font-size: 1.125rem; font-weight: 800; color: #FFFFFF;">Delete Account</h3>
+      </div>
+      <p style="font-size: 0.8125rem; color: var(--aarohan-text-secondary); line-height: 1.5;">
+        Delete account for <strong id="deleteTargetName" style="color: #FFFFFF;">User</strong>? This will permanently remove the user and their uploaded data. This action cannot be undone.
+      </p>
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+        <button onclick="closeModal('deleteModal')" class="btn-secondary">Cancel</button>
+        <button onclick="confirmDelete()" class="btn-danger" style="padding: 0.6rem 1.25rem;">Delete Permanently</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let activeUserFilter = 'all';
+    let targetUserId = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = window.appStore.getCurrentUser();
+      // Ensure user is signed in as admin
+      if (!user || user.role !== 'admin') {
+        window.location.href = 'admin-login.html';
+        return;
+      }
+
+      loadSettingsForm();
+      renderUsersTable();
+      renderAdminResources();
+      renderAuditLogs();
+    });
+
+    function switchAdminSection(sec) {
+      const sections = ['dashboard', 'users', 'academic', 'resources', 'settings', 'audit'];
+      const titles = {
+        dashboard: ['Administrator Dashboard (Overview)', 'Overview of platform usage, model quota, security status and system health.'],
+        users: ['User Management', 'Manage student and administrative access, status policies and credentials.'],
+        academic: ['Academic Curriculum Setup', 'Manage departments, syllabus structures and concept prerequisites.'],
+        resources: ['Resource & Storage Control', 'Monitor and index uploaded academic reference materials.'],
+        settings: ['Universal AI Gateway & System Control', 'Configure multi-provider AI gateway, model parameters, API keys, and rate limits.'],
+        audit: ['Security Audit Trail', 'Track important administrative activities and security changes.']
+      };
+
+      sections.forEach(s => {
+        const el = document.getElementById('sec-' + s);
+        const nav = document.getElementById('nav-' + s);
+        if (s === sec) {
+          el.style.display = 'flex';
+          nav.classList.add('active');
+        } else {
+          el.style.display = 'none';
+          nav.classList.remove('active');
+        }
+      });
+
+      document.getElementById('sectionTitle').innerText = titles[sec][0];
+      document.getElementById('sectionSubtitle').innerText = titles[sec][1];
+    }
+
+    function renderUsersTable(query = '') {
+      let users = window.appStore.getUsers();
+      
+      // Update counts
+      document.getElementById('countAll').innerText = users.length;
+      document.getElementById('countActive').innerText = users.filter(u => u.status === 'active').length;
+      document.getElementById('countSuspended').innerText = users.filter(u => u.status === 'suspended').length;
+      document.getElementById('countRevoked').innerText = users.filter(u => u.status === 'revoked').length;
+      document.getElementById('kpiTotalUsers').innerText = users.length.toLocaleString();
+      document.getElementById('kpiActiveUsers').innerText = users.filter(u => u.status === 'active').length.toLocaleString();
+
+      if (activeUserFilter !== 'all') {
+        users = users.filter(u => u.status === activeUserFilter);
+      }
+      if (query.trim()) {
+        const q = query.toLowerCase();
+        users = users.filter(u => u.name.toLowerCase().includes(q) || (u.rollNo && u.rollNo.toLowerCase().includes(q)) || u.email.toLowerCase().includes(q));
+      }
+
+      const tbody = document.getElementById('userTableBody');
+      tbody.innerHTML = '';
+
+      users.forEach(u => {
+        let statusBadge = '<span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC;">Active</span>';
+        if (u.status === 'suspended') statusBadge = '<span class="chip chip-amber">Suspended</span>';
+        if (u.status === 'revoked') statusBadge = '<span class="chip" style="background: rgba(239, 68, 68, 0.15); color: #FCA5A5;">Revoked</span>';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <strong style="color: #FFFFFF; font-size: 0.8125rem;">${u.name}</strong>
+            <div style="font-size: 0.6875rem; color: var(--aarohan-text-secondary);">${u.email}</div>
+          </td>
+          <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--aarohan-cyan);">${u.rollNo || 'N/A'}</td>
+          <td style="color: #E2E8F0;">${u.department || 'ECE'}</td>
+          <td><span class="chip ${u.role === 'admin' ? 'chip-amber' : 'chip-blue'}">${u.role.toUpperCase()}</span></td>
+          <td>${statusBadge}</td>
+          <td style="font-size: 0.75rem; color: var(--aarohan-text-muted);">${u.lastLogin || 'Never'}</td>
+          <td style="text-align: right;">
+            ${u.role === 'admin' ? '<span style="font-size: 0.6875rem; color: var(--aarohan-amber);">Protected</span>' : `
+              <div style="display: inline-flex; gap: 0.35rem;">
+                ${u.status !== 'active' ? `
+                  <button onclick="setUserStatus('${u.id}', 'active')" class="btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.6875rem; color: #4ADE80;">Reactivate</button>
+                ` : `
+                  <button onclick="promptSuspend('${u.id}', '${u.name}')" class="btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.6875rem;">Suspend</button>
+                  <button onclick="promptRevoke('${u.id}', '${u.name}')" class="btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.6875rem;">Revoke</button>
+                `}
+                <button onclick="promptDelete('${u.id}', '${u.name}')" class="btn-danger" style="padding: 0.25rem 0.4rem; font-size: 0.6875rem;">✕</button>
+              </div>
+            `}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterUsers(status) {
+      activeUserFilter = status;
+      ['btnUserAll', 'btnUserActive', 'btnUserSuspended', 'btnUserRevoked'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.className = 'btn-secondary';
+      });
+
+      const activeBtn = document.getElementById(status === 'all' ? 'btnUserAll' : 'btnUser' + status.charAt(0).toUpperCase() + status.slice(1));
+      if (activeBtn) activeBtn.className = 'btn-primary';
+
+      renderUsersTable(document.getElementById('userSearchInput').value);
+    }
+
+    function searchUsers() {
+      const q = document.getElementById('userSearchInput').value;
+      renderUsersTable(q);
+    }
+
+    // Modal Prompts
+    function promptRevoke(id, name) {
+      targetUserId = id;
+      document.getElementById('revokeTargetName').innerText = name;
+      document.getElementById('revokeModal').classList.add('active');
+    }
+    function confirmRevoke() {
+      if (targetUserId) {
+        window.appStore.updateUserStatus(targetUserId, 'revoked', 'Administrative restriction');
+        closeModal('revokeModal');
+        renderUsersTable();
+        renderAuditLogs();
+      }
+    }
+
+    function promptSuspend(id, name) {
+      targetUserId = id;
+      document.getElementById('suspendTargetName').innerText = name;
+      document.getElementById('suspendModal').classList.add('active');
+    }
+    function confirmSuspend() {
+      if (targetUserId) {
+        window.appStore.updateUserStatus(targetUserId, 'suspended', 'Administrative hold');
+        closeModal('suspendModal');
+        renderUsersTable();
+        renderAuditLogs();
+      }
+    }
+
+    function promptDelete(id, name) {
+      targetUserId = id;
+      document.getElementById('deleteTargetName').innerText = name;
+      document.getElementById('deleteModal').classList.add('active');
+    }
+    function confirmDelete() {
+      if (targetUserId) {
+        window.appStore.deleteUser(targetUserId);
+        closeModal('deleteModal');
+        renderUsersTable();
+        renderAuditLogs();
+      }
+    }
+
+    function setUserStatus(id, status) {
+      window.appStore.updateUserStatus(id, status, 'Administrator status update');
+      renderUsersTable();
+      renderAuditLogs();
+    }
+
+    function openAddUserModal() {
+      document.getElementById('addUserModal').classList.add('active');
+    }
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    function handleAddUserSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('addUserName').value;
+      const email = document.getElementById('addUserEmail').value;
+      const rollNo = document.getElementById('addUserRoll').value;
+      const department = document.getElementById('addUserDept').value;
+      const role = document.getElementById('addUserRole').value;
+
+      window.appStore.addUser({ name, email, rollNo, department, role });
+      closeModal('addUserModal');
+      renderUsersTable();
+      renderAuditLogs();
+    }
+
+    function renderAdminResources() {
+      const list = window.appStore.getResources();
+      const kpiDocs = document.getElementById('kpiDocs');
+      const kpiStorage = document.getElementById('kpiStorage');
+      if (kpiDocs) kpiDocs.innerText = list.length;
+      if (kpiStorage) kpiStorage.innerText = list.length > 0 ? (list.length * 2.8).toFixed(1) + ' MB' : '0 MB';
+
+      const tbody = document.getElementById('adminResourceTableBody');
+      tbody.innerHTML = '';
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--aarohan-text-secondary); padding: 2rem;">No academic resources uploaded yet.</td></tr>`;
+        return;
+      }
+
+      list.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong style="color: #FFFFFF;">${r.name}</strong></td>
+          <td><span class="chip chip-blue">${r.type}</span></td>
+          <td style="color: #E2E8F0;">${r.subject}</td>
+          <td style="font-family: monospace; font-size: 0.75rem;">${r.size}</td>
+          <td><span class="chip" style="background: rgba(34, 197, 94, 0.15); color: #86EFAC;">✔ ${r.status}</span></td>
+          <td style="color: var(--aarohan-text-secondary);">${r.uploadedBy}</td>
+          <td style="text-align: right;">
+            <button onclick="window.appStore.deleteResource('${r.id}'); renderAdminResources();" class="btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.6875rem;">Remove</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderAuditLogs() {
+      const logs = window.appStore.getAuditLogs();
+      const tbody = document.getElementById('auditTableBody');
+      tbody.innerHTML = '';
+
+      logs.slice(0, 15).forEach(l => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-family: monospace; font-size: 0.6875rem; color: var(--aarohan-text-muted);">${l.timestamp}</td>
+          <td><strong style="color: #FFFFFF;">${l.user}</strong></td>
+          <td><span class="chip ${l.role === 'admin' ? 'chip-amber' : 'chip-blue'}">${l.role.toUpperCase()}</span></td>
+          <td style="color: var(--aarohan-cyan); font-weight: 600;">${l.action}</td>
+          <td style="color: var(--aarohan-text-secondary);">${l.details}</td>
+          <td style="font-family: monospace; font-size: 0.6875rem; color: var(--aarohan-text-muted);">${l.ipAddress || '192.168.1.1'}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+  <!-- DEPARTMENT CONFIGURATION MODAL -->
+  <div class="modal-overlay" id="departmentModal">
+    <div class="modal-card" style="max-width: 32rem; border-color: rgba(56, 189, 248, 0.4);">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="chip chip-cyan" id="deptModalCode">ECE</span>
+            <h3 style="font-size: 1.125rem; font-weight: 800; color: #FFFFFF;" id="deptModalName">Department Setup</h3>
+          </div>
+          <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.25rem;">
+            Configure syllabus structure, active semesters, and passing thresholds.
+          </p>
+        </div>
+        <button type="button" onclick="closeDepartmentModal()" style="background: none; border: none; color: var(--aarohan-text-secondary); font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <form onsubmit="saveDepartmentConfig(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--aarohan-cyan); margin-bottom: 0.35rem; text-transform: uppercase;">
+            Active Semesters
+          </label>
+          <input type="number" id="deptModalSems" min="1" max="8" class="aarohan-input" style="background: #070E1C;" value="2">
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--aarohan-cyan); margin-bottom: 0.35rem; text-transform: uppercase;">
+            Enrolled Students
+          </label>
+          <input type="number" id="deptModalStudents" min="10" max="2000" class="aarohan-input" style="background: #070E1C;" value="613">
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--aarohan-cyan); margin-bottom: 0.35rem; text-transform: uppercase;">
+            Regulation Framework
+          </label>
+          <select class="aarohan-input" style="background: #070E1C;">
+            <option value="2021" selected>University Regulation 2021 (CBCS)</option>
+            <option value="2017">University Regulation 2017</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--aarohan-cyan); margin-bottom: 0.35rem; text-transform: uppercase;">
+            Minimum Pass Threshold (%)
+          </label>
+          <input type="number" min="30" max="60" class="aarohan-input" style="background: #070E1C;" value="50">
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;">
+          <button type="button" onclick="closeDepartmentModal()" class="btn-secondary">Cancel</button>
+          <button type="submit" class="btn-primary">Save Configuration</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_MODELS = {
+      nvidia: [
+        { id: 'nvidia/nemotron-3.5-lightning-30b-a3b', name: 'NVIDIA Nemotron 3.5 Lightning (30B - Low Latency)' },
+        { id: 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning', name: 'NVIDIA Nemotron 3 Nano Reasoning (Deep Logic)' }
+      ],
+      groq: [
+        { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B Versatile (Ultra-Fast)' },
+        { id: 'llama-3.1-8b-instant', name: 'Llama 3.1 8B Instant (Ultra-Low Latency)' }
+      ],
+      deepseek: [
+        { id: 'deepseek-chat', name: 'DeepSeek V3 Chat (High Capability)' },
+        { id: 'deepseek-reasoner', name: 'DeepSeek R1 Reasoner (Deep Proofs)' }
+      ],
+      openai: [
+        { id: 'gpt-4o', name: 'GPT-4o (High Precision Flagship)' },
+        { id: 'gpt-4o-mini', name: 'GPT-4o Mini (Fast & Efficient)' }
+      ],
+      openrouter: [
+        { id: 'meta-llama/llama-3.3-70b-instruct', name: 'Llama 3.3 70B Instruct (OpenRouter)' },
+        { id: 'deepseek/deepseek-chat', name: 'DeepSeek V3 (OpenRouter)' }
+      ],
+      custom: [
+        { id: 'nemotron', name: 'Local Nemotron (Ollama / vLLM)' },
+        { id: 'llama3', name: 'Local Llama 3' },
+        { id: 'mistral', name: 'Local Mistral' },
+        { id: 'deepseek-r1', name: 'Local DeepSeek R1' }
+      ],
+      gemini: [
+        { id: 'gemini-1.5-flash', name: 'Gemini 1.5 Flash (Ultra-fast - Recommended)' },
+        { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro (Deep Reasoning)' },
+        { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash (Next-Gen Preview)' }
+      ]
+    };
+
+    const ADMIN_KEY_HELP = {
+      nvidia: { label: 'NVIDIA NIM API Key', placeholder: 'nvapi-...', help: 'Get free evaluation credits at build.nvidia.com' },
+      groq: { label: 'Groq API Key', placeholder: 'gsk_...', help: 'Ultra-fast inference keys from console.groq.com' },
+      deepseek: { label: 'DeepSeek API Key', placeholder: 'sk-...', help: 'Keys available at platform.deepseek.com' },
+      openai: { label: 'OpenAI API Key', placeholder: 'sk-proj-...', help: 'Keys from platform.openai.com/api-keys' },
+      openrouter: { label: 'OpenRouter API Key', placeholder: 'sk-or-...', help: 'Universal gateway key from openrouter.ai/keys' },
+      custom: { label: 'Local API Key (Optional)', placeholder: 'Not required for local Ollama', help: 'Local Ollama / vLLM servers require zero API key' },
+      gemini: { label: 'Google Gemini API Key', placeholder: 'AIzaSy...', help: 'Free API keys available at aistudio.google.com/app/apikey' }
+    };
+
+    function handleAdminProviderChange(provider) {
+      const modelSelect = document.getElementById('settingModel');
+      const models = ADMIN_MODELS[provider] || ADMIN_MODELS.gemini;
+      modelSelect.innerHTML = models.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+
+      const customGroup = document.getElementById('settingCustomUrlGroup');
+      if (customGroup) customGroup.style.display = provider === 'custom' ? 'block' : 'none';
+
+      const keyInfo = ADMIN_KEY_HELP[provider] || ADMIN_KEY_HELP.gemini;
+      const keyLabel = document.getElementById('settingApiKeyLabel');
+      const keyInput = document.getElementById('settingApiKey');
+      const keyHelp = document.getElementById('settingKeyHelp');
+      if (keyLabel) keyLabel.innerText = keyInfo.label;
+      if (keyInput) keyInput.placeholder = keyInfo.placeholder;
+      if (keyHelp) keyHelp.innerText = keyInfo.help;
+
+      const aiCfg = window.appStore.getAIConfig ? window.appStore.getAIConfig() : {};
+      const savedKey = (aiCfg.keys && aiCfg.keys[provider]) || '';
+      if (keyInput) keyInput.value = savedKey;
+    }
+
+    function loadSettingsForm() {
+      const s = window.appStore.getSettings();
+      const aiCfg = window.appStore.getAIConfig ? window.appStore.getAIConfig() : {};
+      const activeProvider = aiCfg.activeProvider || 'nvidia';
+      
+      const provSelect = document.getElementById('settingProvider');
+      if (provSelect) {
+        provSelect.value = activeProvider;
+        handleAdminProviderChange(activeProvider);
+      }
+
+      const modelSelect = document.getElementById('settingModel');
+      if (modelSelect && aiCfg.activeModel) {
+        modelSelect.value = aiCfg.activeModel;
+      }
+
+      const customUrl = document.getElementById('settingCustomUrl');
+      if (customUrl) customUrl.value = aiCfg.customBaseUrl || 'http://localhost:11434/v1';
+
+      document.getElementById('settingPromptLimit').value = s.dailyPromptLimitPerStudent || 30;
+      document.getElementById('settingExamLimit').value = s.maxExamsPerMonth || 10;
+      document.getElementById('settingKillswitch').checked = !s.globalAITutorEnabled;
+
+      const badge = document.getElementById('adminAiStatusBadge');
+      if (badge) {
+        badge.innerText = `Active: ${(activeProvider).toUpperCase()}`;
+      }
+    }
+
+    function handleSaveSettings(e) {
+      e.preventDefault();
+      const activeProvider = document.getElementById('settingProvider').value;
+      const activeModel = document.getElementById('settingModel').value;
+      const apiKey = document.getElementById('settingApiKey').value.trim();
+      const customBaseUrl = (document.getElementById('settingCustomUrl')?.value || 'http://localhost:11434/v1').trim();
+      const dailyPromptLimitPerStudent = parseInt(document.getElementById('settingPromptLimit').value) || 30;
+      const maxExamsPerMonth = parseInt(document.getElementById('settingExamLimit').value) || 10;
+      const globalAITutorEnabled = !document.getElementById('settingKillswitch').checked;
+
+      const currentCfg = window.appStore.getAIConfig ? window.appStore.getAIConfig() : { keys: {} };
+      const updatedKeys = { ...(currentCfg.keys || {}) };
+      if (apiKey) updatedKeys[activeProvider] = apiKey;
+
+      window.appStore.updateAIConfig({
+        activeProvider,
+        activeModel,
+        keys: updatedKeys,
+        customBaseUrl
+      });
+
+      window.appStore.updateSettings({
+        activeModel,
+        apiKey: activeProvider === 'gemini' ? apiKey : (currentCfg.keys?.gemini || ''),
+        dailyPromptLimitPerStudent,
+        maxExamsPerMonth,
+        globalAITutorEnabled
+      });
+
+      renderAuditLogs();
+      const badge = document.getElementById('adminAiStatusBadge');
+      if (badge) badge.innerText = `Active: ${activeProvider.toUpperCase()}`;
+
+      alert(`Universal AI Gateway successfully updated!\nProvider: ${activeProvider.toUpperCase()}\nModel: ${activeModel}`);
+    }
+
+    async function testAdminConnection() {
+      const btn = document.getElementById('adminTestConnBtn');
+      const orig = btn.innerHTML;
+
+      const provider = document.getElementById('settingProvider').value;
+      const model = document.getElementById('settingModel').value;
+      let apiKey = document.getElementById('settingApiKey').value.trim();
+      const baseUrl = (document.getElementById('settingCustomUrl')?.value || 'http://localhost:11434/v1').trim();
+
+      apiKey = apiKey.replace(/^[A-Z_]+_API_KEY\s*=\s*/i, '').replace(/^bearer\s+/i, '').replace(/^["']|["']$/g, '').trim();
+
+      if (!apiKey && provider !== 'custom') {
+        const provName = provider === 'nvidia' ? 'NVIDIA Nemotron' : (provider === 'gemini' ? 'Google Gemini' : provider.toUpperCase());
+        alert(`⚠️ Please enter your ${provName} API key in the field before testing.`);
+        return;
+      }
+
+      btn.innerHTML = 'Testing...';
+      btn.disabled = true;
+
+      try {
+        const headers = { 'Content-Type': 'application/json' };
+        if (apiKey) headers['x-api-key'] = apiKey;
+        if (provider === 'gemini' && apiKey) headers['x-gemini-api-key'] = apiKey;
+
+        const res = await fetch('/api/tutor', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            query: 'Ping: verify provider connection',
+            concept: 'System Test',
+            provider,
+            model,
+            baseUrl,
+            apiKey
+          })
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.text) {
+          const provName = provider === 'nvidia' ? 'NVIDIA Nemotron' : (provider === 'gemini' ? 'Google Gemini' : provider.toUpperCase());
+          alert(`✅ Connection verified! Provider ${provName} (${data.model || model}) is responsive and operational.\n\nSample Output:\n"${data.text.slice(0, 140)}..."`);
+        } else {
+          const provName = provider === 'nvidia' ? 'NVIDIA Nemotron' : (provider === 'gemini' ? 'Google Gemini' : provider.toUpperCase());
+          const detailMsg = data.message 
+            || data.details?.error?.message 
+            || (typeof data.details === 'string' ? data.details : null)
+            || data.details?.message 
+            || data.details?.detail 
+            || data.error 
+            || `HTTP ${res.status}`;
+          alert(`⚠️ Provider connection notice (${provName} - ${model}):\n\n${detailMsg}\n\nTip: Please verify that your API key is active and has available quota.`);
+        }
+      } catch (err) {
+        alert(`Notice: Network test failed (${err.message}). Check internet connectivity.`);
+      } finally {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+      }
+    }
+
+    // Department Configuration Modal
+    function openDepartmentModal(deptCode, deptName, semCount, studentCount) {
+      document.getElementById('deptModalCode').innerText = deptCode;
+      document.getElementById('deptModalName').innerText = deptName;
+      document.getElementById('deptModalSems').value = semCount;
+      document.getElementById('deptModalStudents').value = studentCount;
+      document.getElementById('departmentModal').classList.add('active');
+    }
+
+    function closeDepartmentModal() {
+      document.getElementById('departmentModal').classList.remove('active');
+    }
+
+    function saveDepartmentConfig(e) {
+      e.preventDefault();
+      const code = document.getElementById('deptModalCode').innerText;
+      const sems = document.getElementById('deptModalSems').value;
+      const students = document.getElementById('deptModalStudents').value;
+      window.appStore.logAction('Department Config', `Updated curriculum setup for ${code} (${sems} active semesters, ${students} students)`);
+      renderAuditLogs();
+      closeDepartmentModal();
+      alert(`Department configuration for ${code} successfully updated.`);
+    }
+
+    function handleAdminLogout() {
+      window.appStore.logout();
+      window.location.href = 'admin-login.html';
+    }
+  </script>
+</body>
+</html>
+

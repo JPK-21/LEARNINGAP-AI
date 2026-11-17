@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tutor — Learning-Gap AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/store.js?v=20261115_report_v5"></script>
+</head>
+<body>
+
+  <div class="app-layout">
+    
+    <!-- DESKTOP SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">LG</div>
+        <div>
+          <div style="font-weight: 800; font-size: 0.9375rem; color: #FFFFFF;">
+            Learning-Gap <span style="color: var(--aarohan-cyan);">AI</span>
+          </div>
+          <div style="font-size: 0.625rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: var(--aarohan-text-secondary); letter-spacing: 0.05em;">
+            Analyse • Learn • Improve
+          </div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="exam-overview.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Exam Analysis</span>
+        </a>
+        <a href="gaps.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <span>Learning Gaps</span>
+        </a>
+        <a href="library.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>My Library</span>
+        </a>
+        <a href="tutor.html" class="nav-link active">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14h-2v-2h2zm0-4h-2V7h2z"/></svg>
+          <span>AI Tutor</span>
+        </a>
+        <a href="question-analysis.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span>Practice</span>
+        </a>
+        <a href="progress.html" class="nav-link">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>My Progress</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div style="padding: 0.5rem 0.75rem; border-radius: 0.5rem; background: #070E1C; border: 1px solid var(--aarohan-border); margin-bottom: 0.5rem;">
+          <div id="sidebarUserName" style="font-size: 0.75rem; font-weight: 700; color: #FFFFFF;">Student</div>
+          <div id="sidebarUserRoll" style="font-size: 0.6875rem; color: var(--aarohan-cyan); font-family: 'JetBrains Mono', monospace;">ECE</div>
+        </div>
+        <button onclick="handleLogout()" class="btn-danger" style="width: 100%; justify-content: center;">
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper tutor-layout-canvas">
+      
+      <!-- Top Bar -->
+      <header class="tutor-glass-header" style="padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+            <span class="blended-icon blended-cyan blended-icon-md" title="AI Mentor"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/></svg></span>
+            <h2 style="font-size: 1.25rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.01em;">AI Academic Mentor &amp; Diagnostic Tutor</h2>
+            <span class="chip chip-blue" id="focusConceptBadge" style="font-size: 0.6875rem; padding: 0.2rem 0.6rem;">Focus: Tree Traversal</span>
+            <div id="masteryActionSlot" style="display: inline-flex; align-items: center;"></div>
+          </div>
+          <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.2rem;">
+            Direct multi-turn academic coaching • Step-by-step proofs &amp; LaTeX derivation • Exam mark recovery
+          </p>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+          <button onclick="openApiKeyModal()" id="apiKeyStatusBtn" class="btn-secondary" style="padding: 0.4rem 0.85rem; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 0.45rem;">
+            <span id="apiKeyDot" style="width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: #4ADE80; box-shadow: 0 0 8px #4ADE80;"></span>
+            <span id="apiKeyLabel">AI Engine: Multi-Model Hub</span>
+          </button>
+
+          <div class="stat-pill" style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.08);">
+            <span class="blended-icon blended-amber blended-icon-xs" title="Prompts Quota"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+            <span>Prompts: <strong id="promptCount" style="color: #FFFFFF;">0</strong>/30 today</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- MAIN PAGE CONTENT -->
+      <main class="main-container" style="max-width: 78rem; display: flex; flex-direction: column; height: calc(100vh - 7rem); padding-bottom: 0.75rem;">
+        
+        <!-- CONVERSATION SESSION CONTROLS & PEDAGOGY TOGGLES -->
+        <div class="session-bar-glass" style="margin-bottom: 0.65rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 250px;">
+            <span style="font-size: 0.75rem; color: var(--aarohan-cyan); font-weight: 700; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.35rem;"><span class="blended-icon blended-cyan blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span>Study Thread:</span></span>
+            <select id="chatSessionSelect" onchange="handleSwitchSession(this.value)" class="aarohan-input" style="flex: 1; padding: 0.25rem 0.55rem; font-size: 0.75rem; background: #0A1329; border-color: rgba(56, 189, 248, 0.25); border-radius: 0.5rem;">
+              <!-- Dynamically populated options -->
+            </select>
+          </div>
+
+          <!-- Quick Pedagogical Mode Chips -->
+          <div class="pedagogy-mode-bar">
+            <button type="button" class="mode-chip active" id="mode-default" onclick="setPedagogyMode('default', this)" title="Standard rigorous university explanation">
+              <span class="blended-icon blended-cyan blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"/></svg></span> <span>Standard</span>
+            </button>
+            <button type="button" class="mode-chip" id="mode-eli5" onclick="setPedagogyMode('eli5', this)" title="Explain like I am 5 with fun, everyday real-world analogies">
+              <span class="blended-icon blended-purple blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span> <span>ELI5 Analogy</span>
+            </button>
+            <button type="button" class="mode-chip" id="mode-code" onclick="setPedagogyMode('code', this)" title="Provide complete, clean C code with Big-O complexity">
+              <span class="blended-icon blended-emerald blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span> <span>C Code &amp; Dry Run</span>
+            </button>
+            <button type="button" class="mode-chip" id="mode-rubric" onclick="setPedagogyMode('rubric', this)" title="Show the 100% full-mark answer scheme for university exams">
+              <span class="blended-icon blended-amber blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span> <span>100% Exam Rubric</span>
+            </button>
+            <button type="button" class="mode-chip" id="mode-quiz" onclick="setPedagogyMode('quiz', this)" title="Generate 3 exam practice questions to test my understanding">
+              <span class="blended-icon blended-rose blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 3h6M10 9l-4 8a2 2 0 0 0 1.8 3h8.4a2 2 0 0 0 1.8-3l-4-8V3"/></svg></span> <span>Practice Quiz</span>
+            </button>
+          </div>
+
+          <!-- Session Actions -->
+          <div style="display: flex; align-items: center; gap: 0.4rem;">
+            <button onclick="handleNewChat()" class="btn-primary" style="padding: 0.28rem 0.65rem; font-size: 0.75rem; white-space: nowrap;">
+              <span class="blended-icon blended-cyan blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span> <span>New Session</span>
+            </button>
+            <button onclick="handleExportNotes()" class="btn-secondary" style="padding: 0.28rem 0.65rem; font-size: 0.75rem; white-space: nowrap;" title="Download discussion notes as Markdown">
+              <span class="blended-icon blended-indigo blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span> <span>Export Notes</span>
+            </button>
+            <button onclick="handleClearCurrentChat()" class="btn-secondary" style="padding: 0.28rem 0.65rem; font-size: 0.75rem; color: #F87171; border-color: rgba(239, 68, 68, 0.3);" title="Clear current session messages">
+              <span class="blended-icon blended-rose blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span> <span>Reset</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CHAT CONVERSATION STREAM -->
+        <div id="chatStream" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1.25rem; padding: 0.5rem 0.25rem;">
+          <!-- Dynamically Rendered Messages & Welcome Hero -->
+        </div>
+
+        <!-- FLOATING ACTION DOCK -->
+        <div class="tutor-input-dock" style="margin-top: auto;">
+          <form id="tutorForm" onsubmit="handleSendTutor(event)" style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="display: flex; gap: 0.75rem; align-items: flex-end;">
+              <textarea 
+                id="tutorInput" 
+                rows="1" 
+                class="tutor-textarea-dock" 
+                placeholder="Ask about tree traversals, mark deductions in CT-1, C code implementations, or enter a custom problem..." 
+                oninput="autoResizeTextarea(this)" 
+                onkeydown="handleTextareaKeydown(event)"></textarea>
+              <button type="submit" id="sendBtn" class="btn-primary" style="padding: 0.6rem 1.15rem; font-size: 0.8125rem; display: inline-flex; align-items: center; gap: 0.4rem; border-radius: 0.6rem; flex-shrink: 0; box-shadow: 0 4px 14px rgba(29, 78, 216, 0.4);">
+                <span>Send</span>
+                <span class="blended-icon blended-cyan blended-icon-xs" style="background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); color: #FFFFFF;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+              </button>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.6875rem; color: #64748B; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 0.35rem;">
+              <div style="display: flex; align-items: center; gap: 0.4rem;">
+                <span id="activeModeBadge" style="color: var(--aarohan-cyan); font-weight: 600;">Mode: Standard Academic</span>
+                <span>•</span>
+                <span>Press <kbd style="background: rgba(255,255,255,0.08); padding: 0.1rem 0.3rem; border-radius: 0.2rem; font-family: monospace;">Enter ↵</kbd> to send</span>
+                <span>•</span>
+                <span><kbd style="background: rgba(255,255,255,0.08); padding: 0.1rem 0.3rem; border-radius: 0.2rem; font-family: monospace;">Shift+Enter</kbd> for new line</span>
+              </div>
+              <div style="color: #475569; font-family: 'JetBrains Mono', monospace;">
+                LaTeX Math &bull; C Syntax Highlighted
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <!-- AI MODEL & PROVIDER HUB MODAL -->
+  <div class="modal-overlay" id="apiKeyModal">
+    <div class="modal-card" style="max-width: 32rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="blended-icon blended-cyan blended-icon-xs">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </span>
+          <h3 style="font-size: 1.125rem; font-weight: 800; color: #FFFFFF;">AI Model &amp; Provider Hub</h3>
+        </div>
+        <button onclick="closeApiKeyModal()" style="background: none; border: none; color: var(--aarohan-text-secondary); font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <p style="font-size: 0.8125rem; color: var(--aarohan-text-secondary); margin-bottom: 1.25rem; line-height: 1.5;">
+        Configure which AI model powers your academic tutoring. Switch between Google Gemini, NVIDIA Nemotron, DeepSeek, Groq, or OpenAI.
+      </p>
+
+      <form onsubmit="handleSaveApiKey(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <label style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--aarohan-cyan); margin-bottom: 0.35rem;">
+            1. Select AI Provider
+          </label>
+          <select id="modalProviderSelect" onchange="handleProviderChange(this.value)" class="aarohan-input" style="background: #070E1C; font-weight: 600;">
+            <option value="nvidia">NVIDIA Nemotron (NVIDIA NIM / Open Cloud)</option>
+            <option value="groq">Groq (Ultra-Fast Llama 3.3)</option>
+            <option value="deepseek">DeepSeek (V3 / R1 Reasoner)</option>
+            <option value="openai">OpenAI (GPT-4o / GPT-4o-mini)</option>
+            <option value="openrouter">OpenRouter (All-in-One Gateway)</option>
+            <option value="custom">Custom / Local AI (Ollama / vLLM on localhost)</option>
+            <option value="gemini">Google Gemini (Cloudflare Serverless)</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--aarohan-cyan); margin-bottom: 0.35rem;">
+            2. Model Selection
+          </label>
+          <select id="modalModelSelect" class="aarohan-input" style="background: #070E1C;">
+            <!-- Dynamically populated based on provider -->
+          </select>
+        </div>
+
+        <div id="modalCustomUrlGroup" style="display: none;">
+          <label style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--aarohan-text-secondary); margin-bottom: 0.35rem;">
+            Custom Base URL (OpenAI-compatible)
+          </label>
+          <input type="text" id="modalCustomUrlInput" placeholder="http://localhost:11434/v1" class="aarohan-input" style="font-family: monospace;">
+        </div>
+
+        <div>
+          <label id="modalApiKeyLabel" style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--aarohan-text-secondary); margin-bottom: 0.35rem;">
+            API Key
+          </label>
+          <input type="password" id="modalApiKeyInput" placeholder="Enter key..." class="aarohan-input" style="font-family: monospace;">
+          <div id="modalKeyHelp" style="font-size: 0.6875rem; color: var(--aarohan-text-muted); margin-top: 0.35rem;">
+            <!-- Dynamic provider link -->
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;">
+          <button type="button" onclick="handleTestConnection()" id="testConnectionBtn" class="btn-secondary" style="font-size: 0.75rem; padding: 0.4rem 0.85rem;">
+            <span>⚡ Test Connection</span>
+          </button>
+          <div style="display: flex; gap: 0.6rem;">
+            <button type="button" onclick="closeApiKeyModal()" class="btn-secondary" style="font-size: 0.75rem; padding: 0.4rem 0.85rem;">Cancel</button>
+            <button type="submit" class="btn-primary" style="font-size: 0.75rem; padding: 0.4rem 1rem;">Save &amp; Activate Model</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let activeConcept = "Tree Traversal";
+    let currentSession = null;
+    let currentPedagogyMode = 'default';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = window.appStore.getCurrentUser();
+      if (!user) {
+        window.location.href = 'index.html';
+        return;
+      }
+      document.getElementById('sidebarUserName').innerText = user.name || 'Student';
+      document.getElementById('sidebarUserRoll').innerText = (user.rollNo || '21EC103') + ' • ' + (user.department || 'ECE') + ' Sem 5';
+      document.getElementById('promptCount').innerText = window.appStore.state.promptsUsedToday || 0;
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const c = urlParams.get('concept');
+      if (c) {
+        activeConcept = c;
+      }
+
+      updateApiKeyUI();
+      updateMasteryUI();
+      loadAndRenderSession(activeConcept);
+    });
+
+    function setPedagogyMode(mode, btn) {
+      currentPedagogyMode = mode;
+      document.querySelectorAll('.mode-chip').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const badge = document.getElementById('activeModeBadge');
+      if (badge) {
+        const titles = {
+          default: 'Mode: Standard Rigorous Academic',
+          eli5: 'Mode: ELI5 Real-World Analogy',
+          code: 'Mode: Full C Code & Complexity',
+          rubric: 'Mode: 100% University Exam Rubric',
+          quiz: 'Mode: 3 Practice Exam Questions'
+        };
+        badge.innerText = titles[mode] || 'Mode: Standard Academic';
+      }
+    }
+
+    function autoResizeTextarea(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = Math.min(textarea.scrollHeight, 140) + 'px';
+    }
+
+    function handleTextareaKeydown(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSendTutor(e);
+      }
+    }
+
+    function loadAndRenderSession(concept = null) {
+      currentSession = window.appStore.getActiveChatSession(concept);
+      if (currentSession && currentSession.concept) {
+        activeConcept = currentSession.concept;
+      }
+      document.getElementById('focusConceptBadge').innerText = 'Focus: ' + activeConcept;
+      updateMasteryUI();
+      populateSessionDropdown();
+      renderChatStream();
+    }
+
+    function populateSessionDropdown() {
+      const select = document.getElementById('chatSessionSelect');
+      if (!select) return;
+      const sessions = window.appStore.getChatSessions();
+      select.innerHTML = '';
+      sessions.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        const msgCount = (s.messages || []).length;
+        const dateStr = s.updatedAt ? new Date(s.updatedAt).toLocaleDateString([], { month: 'short', day: 'numeric' }) : '';
+        opt.textContent = `${s.title} (${msgCount} msgs • ${dateStr})`;
+        if (currentSession && s.id === currentSession.id) {
+          opt.selected = true;
+        }
+        select.appendChild(opt);
+      });
+    }
+
+    function handleSwitchSession(sessionId) {
+      if (!sessionId) return;
+      currentSession = window.appStore.switchChatSession(sessionId);
+      if (currentSession && currentSession.concept) {
+        activeConcept = currentSession.concept;
+        document.getElementById('focusConceptBadge').innerText = 'Focus: ' + activeConcept;
+      }
+      populateSessionDropdown();
+      renderChatStream();
+    }
+
+    function handleNewChat() {
+      const title = prompt("Enter a title for this new study thread (or leave blank):", `${activeConcept} Discussion`);
+      currentSession = window.appStore.createChatSession(activeConcept, title ? title.trim() : null);
+      document.getElementById('focusConceptBadge').innerText = 'Focus: ' + activeConcept;
+      populateSessionDropdown();
+      renderChatStream();
+    }
+
+    function handleClearCurrentChat() {
+      if (!currentSession) return;
+      if (!confirm("Are you sure you want to reset the messages in this study thread?")) return;
+      currentSession = window.appStore.clearChatSession(currentSession.id);
+      populateSessionDropdown();
+      renderChatStream();
+    }
+
+    function handleExportNotes() {
+      if (!currentSession) return;
+      const md = window.appStore.exportChatAsMarkdown(currentSession.id);
+      const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const safeTitle = (currentSession.title || "study_notes").replace(/[^a-z0-9_-]/gi, "_");
+      a.href = url;
+      a.download = `LearningGap_Notes_${safeTitle}.md`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function renderChatStream() {
+      const stream = document.getElementById('chatStream');
+      if (!stream) return;
+      stream.innerHTML = '';
+
+      const messages = currentSession && Array.isArray(currentSession.messages) ? currentSession.messages : [];
+      // Filter out any legacy canned welcome messages so only real conversation is rendered
+      const filteredMessages = messages.filter(m => !(m.id && m.id.includes('welcome')));
+      
+      // If thread is brand new, render the interactive Hero Card first
+      if (filteredMessages.length === 0) {
+        const heroDiv = document.createElement('div');
+        heroDiv.className = 'tutor-welcome-hero';
+        heroDiv.innerHTML = `
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+            <div>
+              <div style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.65rem; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 9999px; font-size: 0.6875rem; color: var(--aarohan-cyan); font-weight: 700; margin-bottom: 0.65rem;">
+                <span class="blended-icon blended-cyan blended-icon-xs"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/></svg></span> <span>Personalized AI Diagnostic Mentor</span>
+              </div>
+              <h3 style="font-size: 1.35rem; font-weight: 800; color: #FFFFFF; margin-bottom: 0.35rem; letter-spacing: -0.01em;">
+                Ready to master ${escapeHtml(activeConcept)}?
+              </h3>
+              <p style="font-size: 0.8125rem; color: #94A3B8; max-width: 42rem; line-height: 1.55;">
+                I analyze your evaluated exam scripts, uncover hidden mark deductions, and explain concepts with step-by-step mathematical rigor, intuitive analogies, and clean C implementations.
+              </p>
+            </div>
+
+            <!-- CT-1 Diagnostic Mini Stat Card -->
+            <div style="background: rgba(7, 14, 28, 0.7); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 0.75rem; padding: 0.75rem 1rem; min-width: 200px;">
+              <div style="font-size: 0.6875rem; color: #64748B; font-weight: 700; text-transform: uppercase;">CT-1 Exam Score</div>
+              <div style="font-size: 1.25rem; font-weight: 900; color: #38BDF8; margin: 0.15rem 0;">36 / 50 <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 500;">(72%)</span></div>
+              <div style="font-size: 0.6875rem; color: #F59E0B; display: flex; align-items: center; gap: 0.3rem;">
+                <span class="blended-icon blended-amber blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span> <span>4 Learning Gaps Detected</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Alert Callout for Lost Marks -->
+          <div style="margin-top: 1rem; padding: 0.75rem 1rem; background: rgba(245, 158, 11, 0.08); border-left: 3px solid #F59E0B; border-radius: 0 0.5rem 0.5rem 0; font-size: 0.8125rem; color: #FEF3C7; line-height: 1.5;">
+            <span class="blended-icon blended-rose blended-icon-xs" style="margin-top: 0.15rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span> <strong style="color: #FDE68A;">Highest Recovery Target:</strong> In Question 4 (Tree Traversals), you lost <strong>3.0 marks</strong> by swapping Inorder and Preorder definitions. Ask below to master the Root anchor and recover full marks!
+          </div>
+
+          <!-- Starter Suggestion Cards -->
+          <div style="margin-top: 1.25rem;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+              Recommended Discussion Starters
+            </div>
+            <div class="starter-cards-grid">
+              <div class="starter-card" onclick="sendQuickPrompt('Explain why 3 marks were deducted in Question 4 of CT-1 for Inorder vs Preorder reversal.')">
+                <div class="starter-card-title">
+                  <span class="blended-icon blended-emerald blended-icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="5" r="3"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/><path d="M12 8v4M12 12l-6 4M12 12l6 4"/></svg></span> <span>CT-1 Question 4 Review</span>
+                </div>
+                <div class="starter-card-desc">
+                  Understand why swapping Root visit order lost 3 marks and memorize the recursive C pseudocode.
+                </div>
+              </div>
+
+              <div class="starter-card" onclick="sendQuickPrompt('Explain how to evaluate the postfix expression 5 3 + 8 2 - * using a stack with step-by-step stack state table.')">
+                <div class="starter-card-title">
+                  <span class="blended-icon blended-indigo blended-icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span> <span>Stack Postfix Evaluation</span>
+                </div>
+                <div class="starter-card-desc">
+                  Trace operand push and operator pop order with intermediate stack evaluation results.
+                </div>
+              </div>
+
+              <div class="starter-card" onclick="sendQuickPrompt('Compare Adjacency Matrix and Adjacency List graph representations in terms of space and lookup time with a tabular comparison.')">
+                <div class="starter-card-title">
+                  <span class="blended-icon blended-purple blended-icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></span> <span>Graph Representations</span>
+                </div>
+                <div class="starter-card-desc">
+                  Construct asymptotic comparison table ($O(1)$ vs $O(\\text{deg}(u))$) for sparse vs dense graphs.
+                </div>
+              </div>
+
+              <div class="starter-card" onclick="sendQuickPrompt('Explain Hash Tables and Open Addressing. State the mathematical Load Factor formula lambda = n / m and explain primary clustering.')">
+                <div class="starter-card-title">
+                  <span class="blended-icon blended-amber blended-icon-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg></span> <span>Hashing &amp; Load Factor</span>
+                </div>
+                <div class="starter-card-desc">
+                  Derive $\\lambda = \\frac{n}{m}$ and explain why performance degrades when $\\lambda &gt; 0.75$.
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        stream.appendChild(heroDiv);
+      }
+
+      // Render genuine conversation messages (100% from AI model)
+      filteredMessages.forEach(m => {
+        if (m.role === 'user') {
+          appendUserMessage(m.content, false, m.timestamp);
+        } else {
+          appendTutorResponse(m.content, m.citations || [], m.source || "Google Gemini", false, m.timestamp);
+        }
+      });
+
+      if (window.renderMathInContainer) {
+        window.renderMathInContainer(stream);
+      }
+
+      stream.scrollTop = stream.scrollHeight;
+    }
+
+    const PROVIDER_MODELS = {
+      gemini: [
+        { id: 'gemini-1.5-flash', name: 'Gemini 1.5 Flash (Ultra-fast & Rigorous - Recommended)' },
+        { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro (Deep Analytical Reasoning)' },
+        { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash (Next-Gen Preview)' }
+      ],
+      nvidia: [
+        { id: 'nvidia/nemotron-3.5-lightning-30b-a3b', name: 'NVIDIA Nemotron 3.5 Lightning (High-Speed Academic Reasoning)' },
+        { id: 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning', name: 'NVIDIA Nemotron 3 Nano (Chain-of-Thought Math/Logic)' },
+        { id: 'nvidia/nemotron-3-ultra-550b-a55b', name: 'NVIDIA Nemotron 3 Ultra 550B (Flagship Benchmark)' },
+        { id: 'meta/llama-3.2-90b-vision-instruct', name: 'Llama 3.2 90B Vision Instruct (NVIDIA NIM)' }
+      ],
+      deepseek: [
+        { id: 'deepseek-chat', name: 'DeepSeek-V3 (Advanced Multi-Domain Knowledge)' },
+        { id: 'deepseek-reasoner', name: 'DeepSeek-R1 (Chain-of-Thought Math/Logic Reasoner)' }
+      ],
+      groq: [
+        { id: 'llama-3.3-70b-versatile', name: 'Llama 3.3 70B Versatile (~300 tokens/sec)' },
+        { id: 'mixtral-8x7b-32768', name: 'Mixtral 8x7B (Ultra-Fast)' }
+      ],
+      openai: [
+        { id: 'gpt-4o-mini', name: 'GPT-4o Mini (Cost-efficient & Smart)' },
+        { id: 'gpt-4o', name: 'GPT-4o (Flagship Omni-Model)' }
+      ],
+      openrouter: [
+        { id: 'auto', name: 'OpenRouter Auto Router (Best performance/price)' },
+        { id: 'anthropic/claude-3.5-sonnet', name: 'Claude 3.5 Sonnet (via OpenRouter)' },
+        { id: 'google/gemini-2.0-flash-exp:free', name: 'Gemini 2.0 Flash Free (OpenRouter)' }
+      ],
+      custom: [
+        { id: 'custom-model', name: 'Custom Local / Self-Hosted Model (Ollama / vLLM)' }
+      ]
+    };
+
+    const PROVIDER_HELP = {
+      gemini: {
+        label: "Google AI Studio API Key",
+        placeholder: "AIzaSy...",
+        help: 'Get a free key from <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: var(--aarohan-cyan); text-decoration: underline;">Google AI Studio</a>. If left empty, tutor uses the serverless Cloudflare Pages environment key.',
+        showUrl: false
+      },
+      nvidia: {
+        label: "NVIDIA NIM API Key",
+        placeholder: "nvapi-...",
+        help: 'Get an NVIDIA API key with 1,000 free credits from <a href="https://build.nvidia.com" target="_blank" style="color: var(--aarohan-cyan); text-decoration: underline;">build.nvidia.com</a>.',
+        showUrl: false
+      },
+      deepseek: {
+        label: "DeepSeek API Key",
+        placeholder: "sk-...",
+        help: 'Get a key from <a href="https://platform.deepseek.com/api_keys" target="_blank" style="color: var(--aarohan-cyan); text-decoration: underline;">DeepSeek Platform</a>.',
+        showUrl: false
+      },
+      groq: {
+        label: "Groq Cloud API Key",
+        placeholder: "gsk_...",
+        help: 'Get a free ultra-fast Groq API key from <a href="https://console.groq.com/keys" target="_blank" style="color: var(--aarohan-cyan); text-decoration: underline;">console.groq.com</a>.',
+        showUrl: false
+      },
+      openai: {
+        label: "OpenAI API Key",
+        placeholder: "sk-proj-...",
+        help: 'Get a key from <a href="https://platform.openai.com/api-keys" target="_blank" style="color: var(--aarohan-cyan); text-decoration: underline;">platform.openai.com</a>.',
+        showUrl: false
+      },
+      openrouter: {
+        label: "OpenRouter API Key",
+        placeholder: "sk-or-v1-...",
+        help: 'Access 200+ models from <a href="https://openrouter.ai/keys" target="_blank" style="color: var(--aarohan-cyan); text-decoration: underline;">openrouter.ai</a>.',
+        showUrl: false
+      },
+      custom: {
+        label: "Custom API Key (Optional)",
+        placeholder: "ollama / none",
+        help: 'Enter your local OpenAI-compatible endpoint URL (e.g. <code>http://localhost:11434/v1</code> for Ollama, or <code>http://localhost:8000/v1</code> for vLLM).',
+        showUrl: true
+      }
+    };
+
+    function handleProviderChange(provider) {
+      const modelSelect = document.getElementById('modalModelSelect');
+      const urlGroup = document.getElementById('modalCustomUrlGroup');
+      const keyLabel = document.getElementById('modalApiKeyLabel');
+      const keyInput = document.getElementById('modalApiKeyInput');
+      const keyHelp = document.getElementById('modalKeyHelp');
+
+      const models = PROVIDER_MODELS[provider] || [];
+      modelSelect.innerHTML = '';
+      models.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m.id;
+        opt.textContent = m.name;
+        modelSelect.appendChild(opt);
+      });
+
+      const help = PROVIDER_HELP[provider] || PROVIDER_HELP.gemini;
+      if (urlGroup) urlGroup.style.display = help.showUrl ? 'block' : 'none';
+      if (keyLabel) keyLabel.innerText = help.label;
+      if (keyInput) {
+        keyInput.placeholder = help.placeholder;
+        const cfg = window.appStore.getAIConfig();
+        keyInput.value = (cfg.keys && cfg.keys[provider]) || '';
+      }
+      if (keyHelp) keyHelp.innerHTML = help.help;
+    }
+
+    function updateApiKeyUI() {
+      const cfg = window.appStore.getAIConfig();
+      const dot = document.getElementById('apiKeyDot');
+      const label = document.getElementById('apiKeyLabel');
+      if (!dot || !label) return;
+
+      const providerLabels = {
+        gemini: 'Gemini 3.5',
+        nvidia: 'NVIDIA Nemotron',
+        deepseek: 'DeepSeek',
+        groq: 'Groq Llama 3.3',
+        openai: 'OpenAI GPT-4o',
+        openrouter: 'OpenRouter',
+        custom: 'Custom Local AI'
+      };
+
+      const isCustom = cfg.activeProvider === 'custom';
+      const hasKey = (cfg.keys && cfg.keys[cfg.activeProvider] && cfg.keys[cfg.activeProvider].trim().length > 5) || isCustom;
+      const displayName = providerLabels[cfg.activeProvider] || 'AI Model';
+
+      if (hasKey) {
+        dot.style.background = '#4ADE80';
+        dot.style.boxShadow = '0 0 10px #4ADE80';
+        label.innerText = isCustom ? `AI: Local Ollama (Active)` : `AI: ${displayName}`;
+      } else {
+        dot.style.background = 'var(--aarohan-amber)';
+        dot.style.boxShadow = 'none';
+        label.innerText = `Connect ${displayName} Engine`;
+      }
+    }
+
+    function openApiKeyModal() {
+      const cfg = window.appStore.getAIConfig();
+      const provSelect = document.getElementById('modalProviderSelect');
+      provSelect.value = cfg.activeProvider || 'gemini';
+      handleProviderChange(provSelect.value);
+
+      if (cfg.activeModel) {
+        document.getElementById('modalModelSelect').value = cfg.activeModel;
+      }
+      if (document.getElementById('modalCustomUrlInput')) {
+        document.getElementById('modalCustomUrlInput').value = cfg.customBaseUrl || '';
+      }
+
+      document.getElementById('apiKeyModal').classList.add('active');
+    }
+
+    function closeApiKeyModal() {
+      document.getElementById('apiKeyModal').classList.remove('active');
+    }
+
+    function handleSaveApiKey(e) {
+      e.preventDefault();
+      const provider = document.getElementById('modalProviderSelect').value;
+      const model = document.getElementById('modalModelSelect').value;
+      let key = document.getElementById('modalApiKeyInput').value.trim();
+      const customUrl = document.getElementById('modalCustomUrlInput') ? document.getElementById('modalCustomUrlInput').value.trim() : '';
+
+      key = key.replace(/^[A-Z_]+_API_KEY\s*=\s*/i, '').replace(/^bearer\s+/i, '').replace(/^["']|["']$/g, '').trim();
+
+      const currentCfg = window.appStore.getAIConfig();
+      const updatedKeys = { ...(currentCfg.keys || {}) };
+      if (key) updatedKeys[provider] = key;
+
+      window.appStore.updateAIConfig({
+        activeProvider: provider,
+        activeModel: model,
+        customBaseUrl: customUrl,
+        keys: updatedKeys
+      });
+
+      closeApiKeyModal();
+      updateApiKeyUI();
+      const provLabel = provider === 'nvidia' ? 'NVIDIA Nemotron' : (provider === 'gemini' ? 'Google Gemini' : provider.toUpperCase());
+      alert(`AI Model Hub updated!\nActive Model: ${provLabel} (${model})\nAll tutor conversations will now be powered by this model.`);
+    }
+
+    async function handleTestConnection() {
+      const btn = document.getElementById('testConnectionBtn');
+      const provider = document.getElementById('modalProviderSelect').value;
+      const model = document.getElementById('modalModelSelect').value;
+      let key = document.getElementById('modalApiKeyInput').value.trim();
+      const customUrl = document.getElementById('modalCustomUrlInput') ? document.getElementById('modalCustomUrlInput').value.trim() : '';
+
+      key = key.replace(/^[A-Z_]+_API_KEY\s*=\s*/i, '').replace(/^bearer\s+/i, '').replace(/^["']|["']$/g, '').trim();
+
+      if (!key && provider !== 'custom') {
+        const provLabel = provider === 'nvidia' ? 'NVIDIA Nemotron' : (provider === 'gemini' ? 'Google Gemini' : provider.toUpperCase());
+        alert(`⚠️ Please enter your ${provLabel} API key in the API Key input box before testing the connection.`);
+        return;
+      }
+
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = '<span>⏳ Testing...</span>';
+      btn.disabled = true;
+
+      try {
+        const payload = {
+          query: 'Hello! Please confirm in one short sentence that you are online and ready for academic tutoring.',
+          message: 'Hello! Please confirm in one short sentence that you are online and ready for academic tutoring.',
+          concept: activeConcept || 'Data Structures',
+          activeConcept: activeConcept || 'Data Structures',
+          provider: provider,
+          model: model,
+          apiKey: key,
+          baseUrl: customUrl,
+          customBaseUrl: customUrl
+        };
+
+        const res = await fetch('/api/tutor', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'x-api-key': key
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.text) {
+          const provLabel = provider === 'nvidia' ? 'NVIDIA Nemotron' : (provider === 'gemini' ? 'Google Gemini' : provider.toUpperCase());
+          alert(`✅ Connection Verified Successfully!\n\nEngine: ${provLabel}\nModel: ${data.model || model}\n\nAI Output:\n"${data.text.slice(0, 150)}..."`);
+        } else {
+          const provLabel = provider === 'nvidia' ? 'NVIDIA Nemotron' : (provider === 'gemini' ? 'Google Gemini' : provider.toUpperCase());
+          const detailMsg = data.message 
+            || data.details?.error?.message 
+            || (typeof data.details === 'string' ? data.details : null)
+            || data.details?.message 
+            || data.details?.detail 
+            || data.error 
+            || `Server returned HTTP ${res.status}`;
+          alert(`❌ Connection Test Notice (${provLabel} - ${model}):\n\n${detailMsg}\n\nTip: Please verify that your API key is active and has available quota.`);
+        }
+      } catch (err) {
+        alert(`❌ Network Notice:\n${err.message}\n\nPlease check your network connection and verify your endpoint settings.`);
+      } finally {
+        btn.innerHTML = originalHtml;
+        btn.disabled = false;
+      }
+    }
+
+    function updateMasteryUI() {
+      const slot = document.getElementById('masteryActionSlot');
+      if (!slot) return;
+      const isMastered = window.appStore.isConceptMastered(activeConcept);
+
+      if (isMastered) {
+        slot.innerHTML = `
+          <span style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.65rem; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.45); border-radius: 9999px; font-size: 0.6875rem; color: #34D399; font-weight: 700; box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);">
+            <span class="blended-icon blended-emerald blended-icon-xs" style="width: 0.85rem; height: 0.85rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span>Concept Mastered (+3.0 Marks Recovered)</span>
+          </span>
+        `;
+      } else {
+        slot.innerHTML = `
+          <button onclick="handleMarkMastered()" class="btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.6875rem; font-weight: 700; background: linear-gradient(135deg, #10B981, #059669); border-color: #34D399; box-shadow: 0 0 12px rgba(16, 185, 129, 0.35); display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer;" title="Mark this concept as understood and update your diagnostic score trajectory">
+            <span class="blended-icon blended-emerald blended-icon-xs" style="width: 0.85rem; height: 0.85rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+            <span>Mark Concept Mastered</span>
+          </button>
+        `;
+      }
+    }
+
+    function handleMarkMastered() {
+      const res = window.appStore.markConceptMastered(activeConcept);
+      updateMasteryUI();
+      const p = res.progress;
+      appendTutorResponse(
+        `🎉 **Outstanding Achievement! Concept Marked as Mastered!**\n\nYou have mastered **${escapeHtml(activeConcept)}**. Your academic growth trajectory has been updated across your entire dashboard in real-time:\n\n| Diagnostic Metric | Baseline (CT-1) | Current Mastery Level | Change |\n| :--- | :--- | :--- | :--- |\n| **Predicted CT-1 Score** | 36.0 / 50 (72%) | **${p.currentExamScore} / 50 (${p.currentPercentage}%)** | <span style="color: #4ADE80; font-weight: 700;">+${(p.currentExamScore - 36.0).toFixed(1)} marks recovered</span> |\n| **Subject Mastery (Data Structures)** | 72.0% | **${p.dsMastery}%** | <span style="color: #4ADE80; font-weight: 700;">+${(p.dsMastery - 72.0).toFixed(1)}% growth</span> |\n| **Learning Gaps Resolved** | 0 of ${p.totalGaps} (0%) | **${p.resolvedGaps} of ${p.totalGaps} (${p.resolvedPercentage}%)** | <span style="color: #4ADE80; font-weight: 700;">${p.resolvedGaps} gap(s) cleared</span> |\n| **Semester Academic Growth** | +12.4% | **+${p.growthPercentage}%** | <span style="color: #4ADE80; font-weight: 700;">Positive Momentum</span> |\n\nYour Prerequisite Concept Map (DAG) in [Learning Gaps](gaps.html) has turned **Green (Mastered)**, and your [Progress Analytics](progress.html) trajectory reflects your newly recovered marks!`,
+        [],
+        "Academic Mastery Engine",
+        true
+      );
+    }
+
+    async function handleSendTutor(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('tutorInput');
+      let text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      input.style.height = 'auto';
+
+      // Attach Pedagogical Mode Context to query if not default
+      let enrichedQuery = text;
+      if (currentPedagogyMode === 'eli5') {
+        enrichedQuery += '\n\n[Pedagogical Instruction: Please explain this like I am 5 years old using fun, relatable real-world analogies (toys, pancakes, animals) and zero complex academic jargon!]';
+      } else if (currentPedagogyMode === 'code') {
+        enrichedQuery += '\n\n[Pedagogical Instruction: Please write complete, production-quality C code with comments, edge-case checks, and Big-O time and space complexities.]';
+      } else if (currentPedagogyMode === 'rubric') {
+        enrichedQuery += '\n\n[Pedagogical Instruction: Please show the complete 100% full-mark expected answer according to university evaluation rubrics with diagrams, points, and step-by-step proofs.]';
+      } else if (currentPedagogyMode === 'quiz') {
+        enrichedQuery += '\n\n[Pedagogical Instruction: Please create 3 challenging university exam practice questions on this topic with answers and marking breakdown.]';
+      }
+
+      appendUserMessage(text, true);
+
+      // Loading bubble with 3-dot thinking wave
+      const stream = document.getElementById('chatStream');
+      const loadingRow = document.createElement('div');
+      loadingRow.className = 'chat-row tutor-row';
+      loadingRow.id = 'loadingBubbleRow';
+      loadingRow.innerHTML = `
+        <div class="chat-avatar tutor-avatar blended-icon blended-cyan blended-icon-lg" title="AI Mentor"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/></svg></div>
+        <div class="chat-bubble-container">
+          <div class="chat-meta">
+            <span>AI Personal Tutor</span> • <span>Structuring explanation...</span>
+          </div>
+          <div class="chat-msg-tutor">
+            <div class="bubble" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1.25rem;">
+              <div class="thinking-wave">
+                <span class="thinking-dot"></span>
+                <span class="thinking-dot"></span>
+                <span class="thinking-dot"></span>
+              </div>
+              <span style="color: var(--aarohan-cyan); font-size: 0.8125rem; font-weight: 500;">
+                Analyzing exam context &amp; drafting response...
+              </span>
+            </div>
+          </div>
+        </div>
+      `;
+      stream.appendChild(loadingRow);
+      stream.scrollTop = stream.scrollHeight;
+
+      // Ask Tutor through appStore with full multi-turn context and session persistence
+      const res = await window.appStore.askAITutor(enrichedQuery, activeConcept, null, currentSession ? currentSession.id : null);
+      
+      const lb = document.getElementById('loadingBubbleRow');
+      if (lb) lb.remove();
+
+      appendTutorResponse(res.text, res.citations, res.source, true);
+      document.getElementById('promptCount').innerText = window.appStore.state.promptsUsedToday;
+
+      currentSession = window.appStore.getActiveChatSession();
+      populateSessionDropdown();
+    }
+
+    function appendUserMessage(text, shouldScroll = true, timestamp = null) {
+      const stream = document.getElementById('chatStream');
+      const row = document.createElement('div');
+      row.className = 'chat-row user-row';
+
+      const timeStr = timestamp 
+        ? new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        : new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      row.innerHTML = `
+        <div class="chat-bubble-container">
+          <div class="chat-meta">
+            <span>Student (You)</span> • <span>${timeStr}</span>
+          </div>
+          <div class="chat-msg-user">
+            <div class="bubble">${escapeHtml(text)}</div>
+          </div>
+        </div>
+        <div class="chat-avatar user-avatar blended-icon blended-indigo blended-icon-lg" title="Student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+      `;
+      stream.appendChild(row);
+      if (shouldScroll) {
+        stream.scrollTop = stream.scrollHeight;
+      }
+    }
+
+    function appendTutorResponse(markdownText, citations = [], source = "AI Academic Tutor", shouldScroll = true, timestamp = null) {
+      const stream = document.getElementById('chatStream');
+      const row = document.createElement('div');
+      row.className = 'chat-row tutor-row';
+
+      const timeStr = timestamp 
+        ? new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        : new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      let citationHtml = '';
+      if (citations && citations.length > 0) {
+        citationHtml = citations.map(c => `
+          <div style="padding: 0.35rem 0.65rem; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 0.4rem; font-size: 0.75rem; color: var(--aarohan-cyan); display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.5rem; margin-right: 0.5rem;">
+            <span class="blended-icon blended-cyan blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span> <span>${escapeHtml(c.name)} &bull; ${escapeHtml(c.section)}</span>
+          </div>
+        `).join('');
+      }
+
+      const formattedHtml = parseMarkdown(markdownText);
+      const rawTextEscaped = encodeURIComponent(markdownText);
+
+      row.innerHTML = `
+        <div class="chat-avatar tutor-avatar blended-icon blended-cyan blended-icon-lg" title="AI Mentor"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"/></svg></div>
+        <div class="chat-bubble-container">
+          <div class="chat-meta">
+            <span style="color: var(--aarohan-cyan); font-weight: 700; display: inline-flex; align-items: center; gap: 0.35rem;"><span class="blended-icon blended-cyan blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span><span>AI Personal Tutor</span></span>
+            <span>•</span>
+            <span>${escapeHtml(source)}</span>
+            <span>•</span>
+            <span>${timeStr}</span>
+            <button type="button" onclick="copyResponseText(this, decodeURIComponent('${rawTextEscaped}'))" style="margin-left: auto; background: none; border: none; color: #64748B; font-size: 0.6875rem; cursor: pointer; text-decoration: underline;" title="Copy entire explanation to clipboard">
+              Copy
+            </button>
+          </div>
+          <div class="chat-msg-tutor">
+            <div class="bubble">
+              <div style="line-height: 1.65; color: #E2E8F0;">
+                ${formattedHtml}
+              </div>
+              ${citationHtml ? `<div style="margin-top: 0.875rem; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 0.5rem;">${citationHtml}</div>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+      stream.appendChild(row);
+
+      if (window.renderMathInContainer) {
+        window.renderMathInContainer(row);
+      }
+
+      if (shouldScroll) {
+        stream.scrollTop = stream.scrollHeight;
+      }
+    }
+
+    function copyResponseText(btn, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.innerText;
+        btn.innerHTML = '<span class="blended-icon blended-emerald blended-icon-xs" style="width: 1rem; height: 1rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></span> Copied!';
+        btn.style.color = '#86EFAC';
+        setTimeout(() => {
+          btn.innerText = original;
+          btn.style.color = '#64748B';
+        }, 2000);
+      });
+    }
+
+    function copyCodeSnippet(btn, code) {
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="blended-icon blended-emerald blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg></span> <span>Copied!</span>';
+        btn.style.borderColor = '#22C55E';
+        btn.style.color = '#86EFAC';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.style.borderColor = '';
+          btn.style.color = '';
+        }, 2000);
+      }).catch(() => {
+        alert('Code copied to clipboard!');
+      });
+    }
+
+    function parseMarkdown(md) {
+      if (!md) return '';
+
+      // 1. Extract and preserve code blocks
+      const codeBlocks = [];
+      let text = md.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
+        const id = '___CODEBLOCK_' + codeBlocks.length + '___';
+        codeBlocks.push({ lang: lang || 'c', code: code.trim() });
+        return id;
+      });
+
+      // 2. Extract and preserve display & inline math blocks so markdown formatting does not break LaTeX
+      const mathBlocks = [];
+      text = text.replace(/\$\$([\s\S]*?)\$\$/g, (match, math) => {
+        const id = '___MATHBLOCK_D_' + mathBlocks.length + '___';
+        mathBlocks.push({ display: true, math });
+        return id;
+      });
+      text = text.replace(/\\\[([\s\S]*?)\\\]/g, (match, math) => {
+        const id = '___MATHBLOCK_D_' + mathBlocks.length + '___';
+        mathBlocks.push({ display: true, math });
+        return id;
+      });
+      text = text.replace(/\$([^\$\n]+?)\$/g, (match, math) => {
+        const id = '___MATHBLOCK_I_' + mathBlocks.length + '___';
+        mathBlocks.push({ display: false, math });
+        return id;
+      });
+      text = text.replace(/\\\(([\s\S]*?)\\\)/g, (match, math) => {
+        const id = '___MATHBLOCK_I_' + mathBlocks.length + '___';
+        mathBlocks.push({ display: false, math });
+        return id;
+      });
+
+      // 3. Escape HTML for non-code text
+      text = escapeHtml(text);
+
+      // 4. Headers
+      text = text.replace(/^### (.*$)/gim, '<h3 style="color: #FFFFFF; font-size: 1rem; font-weight: 700; margin: 0.85rem 0 0.35rem; letter-spacing: -0.01em;">$1</h3>');
+      text = text.replace(/^#### (.*$)/gim, '<h4 style="color: var(--aarohan-cyan); font-size: 0.875rem; font-weight: 700; margin: 0.65rem 0 0.25rem;">$1</h4>');
+      text = text.replace(/^## (.*$)/gim, '<h2 style="color: #FFFFFF; font-size: 1.15rem; font-weight: 800; margin: 1rem 0 0.45rem; letter-spacing: -0.01em;">$1</h2>');
+
+      // 5. Blockquotes & Tips
+      text = text.replace(/^> (.*$)/gim, '<blockquote style="border-left: 3px solid var(--aarohan-cyan); padding: 0.5rem 0.875rem; margin: 0.65rem 0; background: rgba(56, 189, 248, 0.06); color: #CBD5E1; border-radius: 0 0.5rem 0.5rem 0; font-size: 0.8125rem;">$1</blockquote>');
+
+      // 6. Bold & Italics
+      text = text.replace(/\*\*(.*?)\*\*/g, '<strong style="color: #FFFFFF; font-weight: 700;">$1</strong>');
+      text = text.replace(/\*(.*?)\*/g, '<em style="color: #CBD5E1;">$1</em>');
+
+      // 6b. Markdown Links
+      text = text.replace(/\[([^\]]+)\]\((javascript:[^)]+)\)/g, '<button onclick="openApiKeyModal()" class="btn-primary" style="padding: 0.35rem 0.75rem; font-size: 0.75rem; margin-top: 0.5rem; cursor: pointer;">$1</button>');
+      text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: var(--aarohan-cyan); text-decoration: underline;">$1</a>');
+
+      // 7. Inline code spans
+      text = text.replace(/`([^`]+)`/g, '<code style="background: rgba(56, 189, 248, 0.12); color: #7DD3FC; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-family: monospace; font-size: 0.8125rem;">$1</code>');
+
+      // 8. Unordered Lists
+      text = text.replace(/^- (.*$)/gim, '<div style="display: flex; gap: 0.5rem; margin: 0.25rem 0; padding-left: 0.5rem;"><span style="color: var(--aarohan-cyan); font-size: 0.875rem;">•</span><span>$1</span></div>');
+
+      // 8b. Extract and parse markdown tables before newline replacement
+      const tableBlocks = [];
+      const tableRegex = /(?:^[ \t]*\|.+?\|[ \t]*(?:\r?\n|$)){2,}/gm;
+      text = text.replace(tableRegex, (tableBlock) => {
+        const lines = tableBlock.trim().split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+        if (lines.length < 2) return tableBlock;
+        if (!/^\|?[\s:-|-]+\|?$/.test(lines[1])) return tableBlock;
+
+        const headerCells = lines[0].replace(/^\|/, '').replace(/\|$/, '').split('|').map(c => c.trim());
+        const alignCells = lines[1].replace(/^\|/, '').replace(/\|$/, '').split('|').map(c => c.trim());
+        const alignments = alignCells.map(c => {
+          if (c.startsWith(':') && c.endsWith(':')) return 'center';
+          if (c.endsWith(':')) return 'right';
+          return 'left';
+        });
+
+        const rows = [];
+        for (let i = 2; i < lines.length; i++) {
+          const rowCells = lines[i].replace(/^\|/, '').replace(/\|$/, '').split('|').map(c => c.trim());
+          rows.push(rowCells);
+        }
+
+        let html = '<div class="table-responsive-wrapper"><table class="tutor-table">';
+        html += '<thead><tr>';
+        headerCells.forEach((h, idx) => {
+          const align = alignments[idx] || 'left';
+          html += `<th style="text-align: ${align};">${h}</th>`;
+        });
+        html += '</tr></thead><tbody>';
+
+        rows.forEach(r => {
+          html += '<tr>';
+          headerCells.forEach((_, idx) => {
+            const cell = r[idx] !== undefined ? r[idx] : '';
+            const align = alignments[idx] || 'left';
+            html += `<td style="text-align: ${align};">${cell}</td>`;
+          });
+          html += '</tr>';
+        });
+
+        html += '</tbody></table></div>';
+        const id = '___TABLEBLOCK_' + tableBlocks.length + '___';
+        tableBlocks.push(html);
+        return id;
+      });
+
+      // 9. Line breaks
+      text = text.replace(/\n\n/g, '<div style="height: 0.65rem;"></div>');
+      text = text.replace(/\n/g, '<br>');
+
+      // 10. Reinsert table blocks FIRST so math inside cells gets restored by KaTeX
+      tableBlocks.forEach((tb, idx) => {
+        text = text.replace('___TABLEBLOCK_' + idx + '___', tb);
+      });
+
+      // 11. Reinsert math blocks (everywhere including table cells)
+      mathBlocks.forEach((mb, idx) => {
+        const placeholder = mb.display ? ('___MATHBLOCK_D_' + idx + '___') : ('___MATHBLOCK_I_' + idx + '___');
+        const delimiter = mb.display ? '$$' : '$';
+        text = text.replace(placeholder, `${delimiter}${mb.math}${delimiter}`);
+      });
+
+      // 12. Reinsert macOS Terminal Code Blocks
+      codeBlocks.forEach((cb, idx) => {
+        const escapedCode = escapeHtml(cb.code);
+        const blockHtml = `
+          <div class="code-window-wrapper">
+            <div class="code-window-header">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <div class="code-window-dots">
+                  <span class="code-dot red"></span>
+                  <span class="code-dot yellow"></span>
+                  <span class="code-dot green"></span>
+                </div>
+                <span style="font-size: 0.6875rem; font-family: 'JetBrains Mono', monospace; color: #94A3B8; text-transform: uppercase; font-weight: 700;">${cb.lang}</span>
+              </div>
+              <button type="button" class="copy-btn-styled" onclick="copyCodeSnippet(this, decodeURIComponent('${encodeURIComponent(cb.code)}'))">
+                <span class="blended-icon blended-cyan blended-icon-xs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span> <span>Copy Code</span>
+              </button>
+            </div>
+            <pre style="padding: 0.875rem 1.15rem; margin: 0; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: #86EFAC; line-height: 1.55; background: #030712;"><code>${escapedCode}</code></pre>
+          </div>
+        `;
+        text = text.replace('___CODEBLOCK_' + idx + '___', blockHtml);
+      });
+
+      return text;
+    }
+
+    function sendQuickPrompt(promptText) {
+      const input = document.getElementById('tutorInput');
+      input.value = promptText;
+      autoResizeTextarea(input);
+      handleSendTutor();
+    }
+
+    function escapeHtml(text) {
+      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+      return String(text).replace(/[&<>"']/g, m => map[m]);
+    }
+
+    function handleLogout() {
+      window.appStore.logout();
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

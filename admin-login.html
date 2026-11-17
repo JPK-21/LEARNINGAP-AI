@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Learning-Gap AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/store.js?v=20261115_report_v5"></script>
+</head>
+<body style="justify-content: space-between;">
+
+  <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 2.5rem 1.5rem;">
+    <div style="max-width: 28rem; width: 100%;">
+      
+      <!-- Back Link -->
+      <div style="margin-bottom: 1.25rem;">
+        <a href="index.html" style="font-size: 0.8125rem; color: var(--aarohan-text-secondary); text-decoration: none;">
+          ← Return to Student Portal
+        </a>
+      </div>
+
+      <div class="glass-panel" style="padding: 2.25rem; border-color: rgba(56, 189, 248, 0.3); box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8);">
+        
+        <!-- Header -->
+        <div style="margin-bottom: 1.5rem;">
+          <div class="indicator-pill" style="margin-bottom: 1rem;">
+            <span class="indicator-dot"></span>
+            <span>Administrative Command Authority</span>
+          </div>
+          <h2 style="font-size: 1.5rem;">Admin Sign In 🛡️</h2>
+          <p style="font-size: 0.75rem; color: var(--aarohan-text-secondary); margin-top: 0.35rem; line-height: 1.5;">
+            Manage platform users, configure AI usage limiters, audit system activity, and organize curriculum taxonomy.
+          </p>
+        </div>
+
+        <!-- Alert Banner -->
+        <div id="adminAlert" style="display: none; padding: 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; margin-bottom: 1.25rem;"></div>
+
+        <!-- Admin Login Form -->
+        <form onsubmit="handleAdminLogin(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+          <div>
+            <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #CBD5E1; margin-bottom: 0.375rem;">
+              Administrator Email *
+            </label>
+            <input type="email" id="adminEmail" class="aarohan-input" placeholder="admin@learninggap.ai" required>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.75rem; font-weight: 600; color: #CBD5E1; margin-bottom: 0.375rem;">
+              Administrator Password *
+            </label>
+            <input type="password" id="adminPassword" class="aarohan-input" placeholder="Enter administrator password" required>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 0.75rem;">
+            Authorize &amp; Launch Console
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('adminEmail').value;
+      const pass = document.getElementById('adminPassword').value;
+      const alert = document.getElementById('adminAlert');
+
+      const res = window.appStore.login(email, 'admin', pass);
+      alert.style.display = 'block';
+
+      if (!res.success) {
+        alert.style.background = 'rgba(36, 12, 22, 0.9)';
+        alert.style.border = '1px solid #4D1627';
+        alert.style.color = '#FCA5A5';
+        alert.innerText = res.message;
+      } else {
+        alert.style.background = 'rgba(11, 27, 51, 0.9)';
+        alert.style.border = '1px solid rgba(56, 189, 248, 0.4)';
+        alert.style.color = '#38BDF8';
+        alert.innerText = 'Authorization verified. Opening Administrator Console...';
+        setTimeout(() => {
+          window.location.href = 'admin.html';
+        }, 500);
+      }
+    }
+  </script>
+
+</body>
+</html>
+
